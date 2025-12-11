@@ -1,0 +1,37 @@
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
+
+interface IPhase {
+  project_id: number
+  name: string
+  description: string
+  weight: number
+  responsible_id: number
+  star_date_planned: string
+  end_date_planned: string
+  start_date_actual: string
+  end_date_actual: string
+}
+
+interface IProject {
+  code: string
+  name: string
+  description: string
+  star_date_planned: string
+  end_date_planned: string
+  start_date_actual: string
+  end_date_actual: string
+  status_id: number
+  phases: Array<IPhase>
+}
+
+export const useProjectStore = defineStore('project', () => {
+  let projectFaseTask:Object=ref({})
+  function phaseWithTasks(PfaseT:object):void {
+    console.log(PfaseT)
+  }
+
+  return {
+    phaseWithTasks
+  }
+})

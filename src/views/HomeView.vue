@@ -1,0 +1,73 @@
+<script lang="ts">
+export const description
+  = "A sidebar that collapses to icons."
+export const iframeHeight = "800px"
+export const containerClass = "w-full h-full"
+</script>
+
+<script setup lang="ts">
+import AppSidebar from "@/components/AppSidebar.vue"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+
+import { payments } from "@/lib/data"
+import type { Payment } from '@/components/payments/columns'
+import { onMounted, ref } from "vue"
+import DataTable from "@/components/payments/data-table.vue"
+import { columns } from "@/components/payments/columns"
+import ModeToggle from "@/components/ModeToggle.vue"
+const data = ref<Payment[]>([])
+onMounted(() => {
+  // Simulate data fetching
+  setTimeout(() => {
+    data.value = payments
+  }, 1000)
+})
+</script>
+
+<template>
+  <SidebarProvider>
+    <AppSidebar variant="floating" />
+
+    <SidebarInset>
+      <header
+        class="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+        <div class="flex items-center gap-2 px-4">
+          <SidebarTrigger class="-ml-1" />
+          <Separator orientation="vertical" class="mr-2 data-[orientation=vertical]:h-5" />
+          <ModeToggle />
+          <Separator orientation="vertical" class="mr-2 data-[orientation=vertical]:h-5" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem class="hidden md:block">
+                <BreadcrumbLink href="#">
+                  Building Your Application
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator class="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        </div>
+      </header>
+
+      <div class="min-h-[100vh] p-2 overflow-y-scroll">
+        <RouterView />
+      </div>
+    </SidebarInset>
+  </SidebarProvider>
+</template>
