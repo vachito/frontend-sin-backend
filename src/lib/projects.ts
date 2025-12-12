@@ -117,7 +117,7 @@ export const projects: IProject[] = [
   {
     code: "prox-004",
     name: "Engagement",
-    description: "Administracion digital de metricas y alcance de redes sociales DAP",
+    description: "Administracion digital de metricas y alcance de redes sociales DAP, alcance de videos en tiktok muy pronto areometro",
     star_date_planned: "2025-12-08",
     end_date_planned: "2025-12-08",
     start_date_actual: "2025-12-08",

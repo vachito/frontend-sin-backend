@@ -50,7 +50,7 @@ onMounted(()=>{
             <GeneralCard 
                 v-for="project  in projects"
                 :ContentCard="project"
-                class="hover:scale-101 hover:border-indigo-200 justify-self-center ease-in-out duration-300"
+                class="hover:border-indigo-300 hover:shadow-xl justify-self-center "
             />
         </div>
     </div>
