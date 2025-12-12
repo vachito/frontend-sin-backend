@@ -16,7 +16,7 @@ import {
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="start">
-      <DropdownMenuItem>Editar</DropdownMenuItem>
+      <DropdownMenuItem>Ver detalle</DropdownMenuItem>
       <DropdownMenuItem>Eliminar</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
