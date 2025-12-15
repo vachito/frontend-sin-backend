@@ -23,16 +23,8 @@ defineProps({
 
 </script>
 <template>
-  <Card class="w-full max-w-sm">
-    <CardAction class="w-full flex justify-end font-bold text-xl pr-4">
-      <DropDownActions />
-    </CardAction>
-
-    <div class="w-full flex justify-center">
-      <Briefcase class="w-10 h-10 text-chart-2" />
-    </div>
-
-    <CardHeader class="flex gap-3 items-center justify-around">
+  <Card class="max-w-100% flex flex-col sm:flex-row sm:justify-between items-center gap-5">
+    <CardHeader class="flex flex-col sm:flex-row gap-5 items-left items-center sm:justify-between order-2 sm:order-0 w-72" >
       <CardTitle>{{ ContentCard.name }}</CardTitle>
       <div class="flex items-center gap-3">
         <CardDescription class="font-semibold">
@@ -43,9 +35,9 @@ defineProps({
       </div>
     </CardHeader>
     
-    <CardContent>
+    <CardContent class="flex flex-col sm:flex-row justify-end sm:justify-end gap-4 order-3 sm:order-0 flex-1">
       <GeneralToolTip :texto="ContentCard.description">
-        <CardDescription class="line-clamp-2 max-w-72">
+        <CardDescription class="line-clamp-3 max-w-72 text-left md:text-center">
           {{ ContentCard.description }}
         </CardDescription>
       </GeneralToolTip>
@@ -62,5 +54,13 @@ defineProps({
         <Progress :model-value="30"/>
       </CardDescription>
     </CardContent>
+
+    <div class=" flex justify-center order-1 sm:order-0 w-20">
+      <Briefcase class="w-10 h-10 text-chart-2" />
+    </div>
+
+    <CardAction class="flex justify-center font-bold text-xl pr-4 order-0 sm:order-4 w-20">
+      <DropDownActions :id="ContentCard.id"/>
+    </CardAction>
   </Card>
 </template>

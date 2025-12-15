@@ -117,3 +117,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+@theme{
+  --color-limeMuni: '#97D700',
+  --color-blueMuni: '#10069F',
+  --color-skyMuni: '#78C6E4',
+  --color-greenMuni: '#2CB877',
+  --color-redMuni: '#DF4747',
+  --bg-limeMuni: '#97D700',
+  --bg-blueMuni: '#10069F',
+  --bg-skyMuni: '#78C6E4',
+  --bg-greenMuni: '#2CB877',
+  --bg-redMuni: '#DF4747',
+}

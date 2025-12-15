@@ -60,14 +60,6 @@ const data = {
           url: "list-project",
         },
         {
-          title: "Fases",
-          url: "fases-project",
-        },
-        {
-          title: "Tareas",
-          url: "task-fases",
-        },
-        {
           title: "Estados",
           url: "statuses",
         },

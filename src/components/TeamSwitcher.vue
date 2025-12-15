@@ -1,15 +1,9 @@
 <script setup lang="ts">
 import type { Component } from "vue"
 
-import { ChevronsUpDown, Plus } from "lucide-vue-next"
 import { ref } from "vue"
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
@@ -41,7 +35,7 @@ const activeTeam = ref(props.teams[0])
             size="lg"
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
-            <div class="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
+            <div class="bg-[#97D700] flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
               <img src="@/assets/img/Muni azul.png" alt="">
             </div>
             <div class="grid flex-1 text-left text-sm leading-tight">

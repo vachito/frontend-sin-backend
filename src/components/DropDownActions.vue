@@ -1,10 +1,21 @@
 <script setup lang="ts">
+  import { useProjectStore } from '@/stores/Project';
+  defineProps({
+    id:{
+      type:Number,
+      required:true
+    }
+  })  
+
+  const store=useProjectStore();
+  
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import router from '@/router';
 </script>
 
 <template>
@@ -16,7 +27,7 @@ import {
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="start">
-      <DropdownMenuItem>Ver detalle</DropdownMenuItem>
+      <DropdownMenuItem @click="store.getProjectDetails(id),router.push({name:'project-details'})"> Ver detalle</DropdownMenuItem>
       <DropdownMenuItem>Eliminar</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>

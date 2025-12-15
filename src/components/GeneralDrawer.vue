@@ -23,7 +23,7 @@ import {
     <div class="flex justify-center">
         <Drawer>
             <DrawerTrigger as-child>
-                <Button variant="outline">
+                <Button variant="outline" class="w-full">
                     {{ btnText }}
                 </Button>
             </DrawerTrigger>

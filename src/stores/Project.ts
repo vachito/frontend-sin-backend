@@ -1,5 +1,7 @@
-import { ref, computed } from 'vue'
+import { ref, onMounted} from 'vue'
+import type{Ref} from 'vue'
 import { defineStore } from 'pinia'
+import { projects } from '@/lib/projects'
 
 interface IPhase {
   project_id: number
@@ -14,6 +16,7 @@ interface IPhase {
 }
 
 interface IProject {
+  id:number
   code: string
   name: string
   description: string
@@ -26,12 +29,19 @@ interface IProject {
 }
 
 export const useProjectStore = defineStore('project', () => {
-  let projectFaseTask:Object=ref({})
-  function phaseWithTasks(PfaseT:object):void {
-    console.log(PfaseT)
-  }
+  const dataProjects:Ref<Array<IProject>> = ref([])
+  const dataProject=ref({})
 
+  onMounted(() => {
+    dataProjects.value = projects
+  })
+
+  function getProjectDetails(id:number){
+    dataProject.value= dataProjects.value.filter(p => p.id === id )
+  }
   return {
-    phaseWithTasks
+    dataProjects,
+    dataProject,
+    getProjectDetails
   }
 })

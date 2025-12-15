@@ -7,6 +7,7 @@ import ProjectsView from '@/views/projects/ProjectsView.vue'
 import FhasesView from '@/views/projects/FhasesView.vue'
 import CreateTaskForm from '@/components/CreateTaskForm.vue'
 import StatusView from '@/views/projects/StatusView.vue'
+import ProjectDetailView from '@/views/projects/ProjectDetailView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
           path:'list',
           name: 'list-project',
           component: ProjectsView,
+        },
+        {
+          path:'details',
+          name: 'project-details',
+          component: ProjectDetailView,
         },
         {
           path:'fases',
