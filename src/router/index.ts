@@ -1,14 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import LoginView from '@/views/auth/LoginView.vue'
-import AuthLayout from '@/components/Layouts/AuthLayout.vue'
-import HoverCard from '@/components/HoverCard.vue'
 import ProjectsView from '@/views/projects/ProjectsView.vue'
-import FhasesView from '@/views/projects/FhasesView.vue'
-import CreateTaskForm from '@/components/CreateTaskForm.vue'
-import StatusView from '@/views/projects/StatusView.vue'
+import StatusView from '@/views/auth/StatusView.vue'
 import ProjectDetailView from '@/views/projects/ProjectDetailView.vue'
-
+import DapView from '@/views/DapView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -18,56 +13,30 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/auth',
-      component: AuthLayout,
-      children: [
-        {
-          path:'login',
-          name: 'login',
-          component: LoginView,
-        },
-        {
-          path:'register',
-          name: 'register',
-          component: () => import('@/views/auth/RegisterView.vue'),
-        },
-      ]
-    },
-    {
       path: '/project',
       component: HomeView,
       children: [
         {
-          path:'list',
+          path: 'list',
           name: 'list-project',
           component: ProjectsView,
         },
         {
-          path:'details',
+          path: 'details',
           name: 'project-details',
           component: ProjectDetailView,
         },
         {
-          path:'fases',
-          name: 'fases-project',
-          component: FhasesView,
-        },
-        {
-          path:'tareas',
-          name: 'task-fases',
-          component: CreateTaskForm,
-        },
-        {
-          path:'estados',
+          path: 'estados',
           name: 'statuses',
           component: StatusView,
         },
+        {
+          path: '/muni',
+          name: 'muni',
+          component: DapView
+        },
       ]
-    },
-    {
-      path:'/hover',
-      name:'hover',
-      component: HoverCard
     },
   ],
 })

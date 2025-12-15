@@ -28,7 +28,7 @@ import router from '@/router';
     </DropdownMenuTrigger>
     <DropdownMenuContent align="start">
       <DropdownMenuItem @click="store.getProjectDetails(id),router.push({name:'project-details'})"> Ver detalle</DropdownMenuItem>
-      <DropdownMenuItem>Eliminar</DropdownMenuItem>
+      <DropdownMenuItem @click="store.deleteProject(id)">Eliminar</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>

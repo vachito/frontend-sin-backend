@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Ref, ref } from 'vue'
+import { computed} from 'vue'
 import type { DateValue } from '@internationalized/date'
 import { DateFormatter, getLocalTimeZone, today } from '@internationalized/date'
 
@@ -13,8 +13,21 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 
+const props = defineProps<{
+  modelValue?: DateValue
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value?: DateValue): void
+}>()
+
+const date = computed({
+  get: () => props.modelValue,
+  set: (value) => emit('update:modelValue', value),
+})
+
 const defaultPlaceholder = today(getLocalTimeZone())
-const date = ref() as Ref<DateValue>
+
 
 const df = new DateFormatter('en-US', {
   dateStyle: 'long',
@@ -26,7 +39,7 @@ const df = new DateFormatter('en-US', {
     <PopoverTrigger as-child>
       <Button
         variant="outline"
-        :class="cn('w-[240px] justify-start text-left font-normal', !date && 'text-muted-foreground')"
+        :class="cn('w-60 justify-start text-left font-normal', !date && 'text-muted-foreground')"
       >
         <CalendarIcon />
         {{ date ? df.format(date.toDate(getLocalTimeZone())) : "Selecciona una fecha" }}

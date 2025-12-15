@@ -30,11 +30,11 @@ const description = ref('Llena todos los datos solicitados')
       class="max-w-100% flex flex-col sm:flex-row sm:justify-between items-center gap-3 hover:border-indigo-200 hover:-translate-y-0.5 transition-all"
     >
       <CardHeader class="flex flex-col gap-5 w-30">
-        <CardTitle>{{ store.dataProject[0].name }}</CardTitle>
+        <CardTitle>{{ store.dataProject.name }}</CardTitle>
 
         <CardDescription>
           <Badge class="bg-chart-4">
-            {{ store.dataProject[0].status_id === 1 ? 'Activo' : ' ' }}
+            {{ store.dataProject.status_id === 1 ? 'Activo' : ' ' }}
           </Badge>
         </CardDescription>
       </CardHeader>
@@ -42,7 +42,7 @@ const description = ref('Llena todos los datos solicitados')
       <CardContent class="flex-1 flex flex-col sm:flex-row sm:justify-evenly gap-4">
         <div class="w-auto flex-1 flex flex-col justify-between gap-4 sm:gap-0">
           <CardDescription class="text-left md:text-center">
-            {{ store.dataProject[0].description }}
+            {{ store.dataProject.description }}
           </CardDescription>
 
           <div class="w-50 self-center">
@@ -57,12 +57,12 @@ const description = ref('Llena todos los datos solicitados')
         <CardDescription class="text-center flex items-center gap-2">
           <CalendarDays />
           <p>
-            {{ store.dataProject[0].star_date_planned }}
+            {{ store.dataProject.star_date_planned }}
           </p>
           <ChevronsRight />
 
           <p>
-            {{ store.dataProject[0].end_date_planned }}
+            {{ store.dataProject.end_date_planned }}
           </p>
         </CardDescription>
       </CardContent>
@@ -88,7 +88,7 @@ const description = ref('Llena todos los datos solicitados')
           <GeneralEmpty :emp="emp" />
           <CardContent class="flex flex-col gap-2">
             <div class="rounded-md px-4 py-2 text-sm space-y-3">
-              <FhaseDetailView v-for="phase in store.dataProject[0].phases" :phase="phase" />
+              <FhaseDetailView v-for="phase in store.dataProject.phases" :phase="phase" />
             </div>
           </CardContent>
         </CollapsibleContent>

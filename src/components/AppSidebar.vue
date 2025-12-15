@@ -72,15 +72,15 @@ const data = {
       items: [
         {
           title: "Perfil",
-          url: "login",
+          url: "muni",
         },
         {
           title: "Cambiar contraseña",
-          url: "login",
+          url: "muni",
         },
         {
           title: "Usuarios",
-          url: "login",
+          url: "muni",
         },
       ],
     },

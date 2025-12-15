@@ -25,8 +25,6 @@ import {
 import { payments } from "@/lib/data"
 import type { Payment } from '@/components/payments/columns'
 import { onMounted, ref } from "vue"
-import DataTable from "@/components/payments/data-table.vue"
-import { columns } from "@/components/payments/columns"
 import ModeToggle from "@/components/ModeToggle.vue"
 const data = ref<Payment[]>([])
 onMounted(() => {
@@ -65,7 +63,7 @@ onMounted(() => {
         </div>
       </header>
 
-      <div class="min-h-[100vh] p-2 overflow-y-scroll">
+      <div class="min-h-[100vh] p-2">
         <RouterView />
       </div>
     </SidebarInset>

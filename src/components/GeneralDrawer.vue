@@ -37,13 +37,9 @@ import {
                 </div>
 
                 <DrawerClose as-child>
-                    <div class="flex flex-col md:flex-row md:justify-center md:w-5/12 md:mx-auto gap-2">
-                        <Button variant="outline" class="w-11/12 md:w-20 mt-7 mx-auto">
+                    <div class="flex md:w-5/12 md:mx-auto gap-2">
+                        <Button variant="outline" class="w-11/12 md:w-20 mt-7">
                             Cancelar
-                        </Button>
-
-                        <Button class="w-11/12 md:w-20 my-7 mx-auto">
-                            Guardar
                         </Button>
                     </div>
                 </DrawerClose>
