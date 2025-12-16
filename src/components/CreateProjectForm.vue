@@ -2,7 +2,7 @@
     import { ref, watchEffect } from 'vue'
     import { useProjectStore } from '@/stores/Project'
     //Calendar
-   import type { DateValue } from '@internationalized/date'
+    import type { DateValue } from '@internationalized/date'
     import GeneralDatePicker from './GeneralDatePicker.vue'
     import { Button } from '@/components/ui/button'
     //Field form
@@ -17,7 +17,7 @@
 
     import { Input } from '@/components/ui/input'
     import { Textarea } from '@/components/ui/textarea'
-import router from '@/router'
+    import router from '@/router'
 
     const store=useProjectStore()
     const startDate= ref<DateValue>()

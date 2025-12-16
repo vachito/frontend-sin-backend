@@ -23,11 +23,15 @@ import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from '@/components/
         {{ btnText }}
       </Button>
     </DrawerTrigger>
-    <DrawerContent class="mt-3 h-[630px]">
-      <CreatePhaseForm  class="w-5/12 mx-auto"/>
+    <DrawerContent class="mt-3 h-[500px]">
+      <CreatePhaseForm class="w-5/12 mx-auto" />
 
       <DrawerClose as-child>
-        <Button variant="outline" class="w-20 mt-7 mx-auto"> Cancelar </Button>
+        <div class="flex md:w-5/12 md:mx-auto gap-2">
+          <Button variant="outline" class="w-11/12 md:w-20 mt-7">
+            Cancelar
+          </Button>
+        </div>
       </DrawerClose>
     </DrawerContent>
   </Drawer>

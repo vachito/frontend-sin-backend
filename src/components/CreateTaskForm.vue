@@ -1,16 +1,17 @@
 <script setup lang="ts">
-
-//Field form
-import {
-    Field,
-    FieldGroup,
-    FieldLabel,
-    FieldSet,
-    FieldLegend,
-    FieldDescription
-} from '@/components/ui/field'
+import { reactive, ref, watchEffect } from 'vue'
+import { uid } from 'uid'
+const props = defineProps({
+    phase_id: {
+        type: [Number, String],
+        required: true
+    }
+})
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import type { DateValue } from '@internationalized/date'
 //Calendar
 import GeneralDatePicker from './GeneralDatePicker.vue'
 
@@ -23,6 +24,17 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 
+//objeto sheet
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from '@/components/ui/sheet'
 //objeto de prueba para el select
 const objSelect = [
     {
@@ -43,96 +55,123 @@ const objSelect = [
 const objPriority = [
     {
         id: 1,
-        name: 'imprescindible'
+        name: 'Baja'
     },
     {
         id: 2,
-        name: 'debería tener'
+        name: 'Normal'
     },
     {
         id: 3,
-        name: 'podría tener'
+        name: 'Media'
     },
     {
         id: 4,
-        name: 'no tendrá'
+        name: 'Alta'
     },
 ]
+
+const startDate = ref<DateValue>()
+const endDate = ref<DateValue>()
+
+
+
+const task = reactive({
+    id: uid(),
+    phase_id: props.phase_id,
+    name: '',
+    description: '',
+    responsible_id: null,
+    is_complete: false,
+    star_date_planned:startDate.value?.toString(),
+    end_date_planned:endDate.value?.toString(),
+    start_date_actual: '',
+    end_date_actual: '',
+    priority: ''
+})
+
+watchEffect(() => {
+  task.star_date_planned = startDate.value
+    ? startDate.value.toString()
+    : ''
+
+  task.end_date_planned = endDate.value
+    ? endDate.value.toString()
+    : ''
+})
 </script>
 
 <template>
-    <form novalidate>
-        <FieldGroup>
-            <FieldSet>
-                <FieldLegend class="text-center">Crear tarea de fase</FieldLegend>
-                <FieldDescription class="text-center">
-                    Llena el formulario para crear la tarea
-                </FieldDescription>
-                <FieldGroup>
-                    <div class="md:grid md:grid-cols-2 gap-2.5">
-                        <Field>
-                            <FieldLabel for="checkout-7j9-card-name-43j">
-                                Responsable
-                            </FieldLabel>
-                            <Select>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Seleccione al usuario responsable de la tarea" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem v-for="item in objSelect" :value="item.id">
-                                        {{ item.name }}
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </Field>
+    <Sheet>
+        <SheetTrigger as-child>
+            <Button variant="secondary">
+                Agregar Tarea
+            </Button>
+        </SheetTrigger>
 
-                        <Field>
-                            <FieldLabel for="checkout-7j9-card-number-uw1">
-                                Nombre
-                            </FieldLabel>
-                            <Input id="checkout-7j9-card-number-uw1" placeholder="Ingresa aquí el nombre de la tarea"
-                                required />
-                        </Field>
+        <SheetContent>
+            <SheetHeader>
+                <SheetTitle>Agregar una tarea a la fase</SheetTitle>
+                <SheetDescription>
+                    Llena todos los datos solicitados en el formulario.
+                </SheetDescription>
+            </SheetHeader>
+            <div class="grid flex-1 auto-rows-min gap-6 px-4">
+                <div class="grid gap-3">
+                    <Label for="sheet-demo-responsible">Responsable</Label>
+                    <Select id="sheet-demo-responsible" v-model="task.responsible_id">
+                        <SelectTrigger>
+                            <SelectValue placeholder="Seleccione un usuario responsable de la tarea" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem v-for="item in objSelect" :value="item.id">
+                                {{ item.name }}
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div class="grid gap-3">
+                    <Label for="sheet-demo-name">Nombre</Label>
+                    <Input id="sheet-demo-name" placeholder="Ingresa aquí el nombre de la tarea" v-model="task.name"
+                        required />
+                </div>
+                <div class="grid gap-3">
+                    <Label for="sheet-demo-username">Descripción</Label>
+                    <Textarea placeholder="Ingresa aquí la descripción de la tarea" v-model="task.description" />
+                </div>
+                <div class="grid gap-3">
+                    <Label for="sheet-demo-username">Prioridad</Label>
+                    <Select v-model="task.priority">
+                        <SelectTrigger>
+                            <SelectValue placeholder="Seleccione una prioridad para la tarea" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem v-for="item in objPriority" :value="item.id">
+                                {{ item.name }}
+                            </SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+                <div class="grid gap-3">
+                    <Label for="sheet-demo-username">Fecha de inicio</Label>
+                    <GeneralDatePicker v-model="startDate" />
+                </div>
+                <div class="grid gap-3">
+                    <Label for="sheet-demo-username">Fecha estimada para finalizar</Label>
+                    <GeneralDatePicker v-model="endDate" />
+                </div>
+            </div>
 
-                        <Field class=" col-start-1 col-end-3">
-                            <FieldLabel for="checkout-7j9-card-number-uw1">
-                                Descripción
-                            </FieldLabel>
-                            <Textarea placeholder="Ingresa aquí la descripción de la tarea" />
-                        </Field>
-
-                        <Field>
-                            <FieldLabel for="checkout-7j9-card-name-43j">
-                                Prioridad
-                            </FieldLabel>
-                            <Select>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Seleccione una prioridad para la tarea" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem v-for="item in objPriority" :value="item.id">
-                                        {{ item.name }}
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </Field>
-
-                        <Field>
-                            <FieldLabel for="checkout-7j9-card-name-43j">
-                                Fecha de inicio
-                            </FieldLabel>
-                            <GeneralDatePicker />
-                        </Field>
-
-                        <Field>
-                            <FieldLabel for="checkout-7j9-card-number-uw1">
-                                Fecha estimada para finalizar
-                            </FieldLabel>
-                            <GeneralDatePicker />
-                        </Field>
-                    </div>
-                </FieldGroup>
-            </FieldSet>
-        </FieldGroup>
-    </form>
+            <SheetFooter>
+                <Button type="submit">
+                    Guardar
+                </Button>
+                <SheetClose as-child>
+                    <Button variant="outline">
+                        Close
+                    </Button>
+                </SheetClose>
+            </SheetFooter>
+        </SheetContent>
+    </Sheet>
 </template>

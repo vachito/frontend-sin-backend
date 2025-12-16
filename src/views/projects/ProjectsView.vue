@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed, ref} from 'vue'
+import { computed, ref, onMounted} from 'vue'
 import { useProjectStore } from '@/stores/Project'
-
 import GeneralEmpty from '@/components/GeneralEmpty.vue'
 import GeneralDrawer from '@/components/GeneralDrawer.vue'
 import GeneralCard from '@/components/GeneralCard.vue'
@@ -13,7 +12,7 @@ import Input from '@/components/ui/input/Input.vue'
 import { LayoutGrid, List, Search } from 'lucide-vue-next'
 
 const store=useProjectStore()
-store.initProjects()
+//store.initProjects()
 const searchProject = ref('')
 
 const CardsGrid = ref(true)
@@ -36,6 +35,7 @@ const filteredProject = computed(()=>{
   const lowerCaseSearch = searchProject.value.toLocaleLowerCase()
   return store.dataProjects.filter(item => item.name.toLocaleLowerCase().includes(lowerCaseSearch))
 })
+
 </script>
 
 <template>

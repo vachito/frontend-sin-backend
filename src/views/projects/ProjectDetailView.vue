@@ -1,22 +1,27 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useProjectStore } from '@/stores/Project'
 import FhaseDetailView from './FhaseDetailView.vue'
 import PhaseDrawer from '@/components/PhaseDrawer.vue'
+
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { CalendarDays, ChevronsRight, ChevronsUpDown } from 'lucide-vue-next'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Button } from '@/components/ui/button'
+import GeneralEmpty from '@/components/GeneralEmpty.vue'
 
-import { useProjectStore } from '@/stores/Project'
+onMounted(()=>{
+  store.dataformPhase.project_id = store.dataProject?.id
+})
+
 const store = useProjectStore()
 const isOpen = ref(false)
 
-//boton para agreagar una
 const emp = {
   title: '¡ Aún no tienes fases registradas!',
-  description: 'Aún no has creado fases. Podemos iniciar creando tu primer fase.',
+  description: 'Aún no has creado fases. Podemos iniciar creando tu primera fase.',
 }
 
 const btnText = ref('Agregar Fase')
@@ -40,7 +45,7 @@ const description = ref('Llena todos los datos solicitados')
       </CardHeader>
 
       <CardContent class="flex-1 flex flex-col sm:flex-row sm:justify-evenly gap-4">
-        <div class="w-auto flex-1 flex flex-col justify-between gap-4 sm:gap-0">
+        <div class="w-auto flex-1 flex flex-col justify-between gap-4 sm:gap-0 space-y-4">
           <CardDescription class="text-left md:text-center">
             {{ store.dataProject.description }}
           </CardDescription>
@@ -55,15 +60,10 @@ const description = ref('Llena todos los datos solicitados')
         </div>
 
         <CardDescription class="text-center flex items-center gap-2">
-          <CalendarDays />
-          <p>
-            {{ store.dataProject.star_date_planned }}
-          </p>
-          <ChevronsRight />
-
-          <p>
-            {{ store.dataProject.end_date_planned }}
-          </p>
+          <CalendarDays class=" text-chart-2" />
+          <p>{{ store.dataProject.star_date_planned }}</p>
+          <ChevronsRight class=" text-chart-2"/>
+          <p>{{ store.dataProject.end_date_planned }}</p>
         </CardDescription>
       </CardContent>
     </Card>
@@ -85,8 +85,8 @@ const description = ref('Llena todos los datos solicitados')
           <PhaseDrawer :btn-text="btnText" :title="title" :description="description" class="w-50" />
         </div>
         <CollapsibleContent>
-          <GeneralEmpty :emp="emp" />
-          <CardContent class="flex flex-col gap-2">
+          <GeneralEmpty v-if="store.dataProject?.phases.length === 0" :emp="emp" />
+          <CardContent v-else class="flex flex-col gap-2">
             <div class="rounded-md px-4 py-2 text-sm space-y-3">
               <FhaseDetailView v-for="phase in store.dataProject.phases" :phase="phase" />
             </div>

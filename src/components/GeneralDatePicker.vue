@@ -39,7 +39,7 @@ const df = new DateFormatter('en-US', {
     <PopoverTrigger as-child>
       <Button
         variant="outline"
-        :class="cn('w-60 justify-start text-left font-normal', !date && 'text-muted-foreground')"
+        :class="cn('min-w-60 justify-start text-left font-normal', !date && 'text-muted-foreground')"
       >
         <CalendarIcon />
         {{ date ? df.format(date.toDate(getLocalTimeZone())) : "Selecciona una fecha" }}

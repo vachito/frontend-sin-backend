@@ -20,14 +20,14 @@ import { CalendarDays, ChevronsRight } from 'lucide-vue-next'
       <CardDescription>{{ task.description }}</CardDescription>
 
       <div class="flex justify-between mt-5">
-        <p>Responsable: {{ task.responsible_id === 1 ? 'Juan' : '' }}</p>
-        <p>Estado: {{ task.is_complete === false ? 'Incompleta' : 'Completa' }}</p>
-        <p>Prioridad: {{ task.priority }}</p>
+        <p>Responsable: <span class="text-chart-2 font-bold">{{ task.responsible_id === 1 ? 'Juan' : '' }}</span></p>
+        <p>Estado: <span class="bg-chart-1 p-1 rounded-sm text-background font-semibold">{{ task.is_complete === false ? 'Incompleta' : 'Completa' }}</span></p>
+        <p>Prioridad: <span class="text-chart-2 font-bold">{{ task.priority }}</span></p>
 
         <div class="text-center flex items-center gap-2">
-          <CalendarDays />
+          <CalendarDays class="text-chart-2"/>
           <p>{{ task.star_date_planned }}</p>
-          <ChevronsRight />
+          <ChevronsRight class="text-chart-2"/>
           <p>{{ task.end_date_planned }}</p>
         </div>
       </div>
