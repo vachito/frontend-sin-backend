@@ -2,25 +2,25 @@ import { ref, reactive, watch } from 'vue'
 import type { Ref } from 'vue'
 import { defineStore } from 'pinia'
 import { projects } from '@/lib/projects'
-import {uid} from 'uid'
+import { uid } from 'uid'
 
 interface ITask {
-  id:number|string|null
+  id: number | string | null
   phase_id: number
   name: string
-  description: string
+  description: string | null
   responsible_id: number
   is_complete: boolean
-  star_date_planned: string
-  end_date_planned: string
-  start_date_actual: string
-  end_date_actual: string
+  star_date_planned: string | null
+  end_date_planned: string | null
+  start_date_actual: string | null
+  end_date_actual: string | null
   priority: string
 }
 
 interface IPhase {
-  id:number|string|null
-  project_id: number |string| null
+  id: number | string | null
+  project_id: number | string | null
   name: string | null
   description: string | null
   weight: number | null
@@ -28,19 +28,19 @@ interface IPhase {
   star_date_planned: string | null
   end_date_planned: string | null
   start_date_actual: string | null
-  end_date_actual: string | null,
+  end_date_actual: string | null
   tasks: Array<ITask> | []
 }
 
 interface IProject {
-  id: number|string
+  id: number | string
   code: string
   name: string
   description: string
   star_date_planned: string
   end_date_planned: string
-  start_date_actual: string|null
-  end_date_actual: string|null
+  start_date_actual: string | null
+  end_date_actual: string | null
   status_id: number
   phases: Array<IPhase> | []
 }
@@ -82,16 +82,20 @@ export const useProjectStore = defineStore('project', () => {
   //   }
   // }
 
-  watch(dataProjects,()=>{
-    SaveLocalStorage()
-  },{deep:true})
+  watch(
+    dataProjects,
+    () => {
+      SaveLocalStorage()
+    },
+    { deep: true },
+  )
 
-  function SaveLocalStorage (){
-    localStorage.setItem('projects',JSON.stringify(dataProjects.value))
+  function SaveLocalStorage() {
+    localStorage.setItem('projects', JSON.stringify(dataProjects.value))
   }
 
   function getProjectDetails(id: number) {
-    dataProject.value = dataProjects.value.find(p => p.id === id) ?? null
+    dataProject.value = dataProjects.value.find((p) => p.id === id) ?? null
   }
 
   function saveProject() {
@@ -99,43 +103,53 @@ export const useProjectStore = defineStore('project', () => {
     resetDataForm()
   }
 
-  function deleteProject(id:number){
-    dataProjects.value = dataProjects.value.filter(p => p.id !== id)
+  function deleteProject(id: number) {
+    dataProjects.value = dataProjects.value.filter((p) => p.id !== id)
   }
 
   function savePhase() {
-    const i = dataProjects.value.findIndex(p => p.id === dataformPhase.project_id)
-    dataProjects.value[i]?.phases.push({...dataformPhase, tasks:[...dataformPhase.tasks]}) 
+    const i = dataProjects.value.findIndex((p) => p.id === dataformPhase.project_id)
+    dataProjects.value[i]?.phases.push({ ...dataformPhase, tasks: [...dataformPhase.tasks] })
     resetDataFormPhase()
   }
 
+  function saveTask(dataTask:object) {
+    console.log(dataTask);
+    console.log(dataProjects.value.phases);
+    
+    // const i = dataProjects.value.
+    // dataProjects.value[i]?.phases.push({ ...dataformPhase, tasks: [...dataformPhase.tasks] })
+    // resetDataFormPhase()
+  }
+
   function resetDataForm() {
-    dataform.id =9,
-    dataform.code= 'prj-000',
-    dataform.name= '',
-    dataform.description= '',
-    dataform.star_date_planned= '',
-    dataform.end_date_planned= '',
-    dataform.start_date_actual= '',
-    dataform.end_date_actual= '',
-    dataform.status_id= 1,
-    dataform.phases= []
+    ;((dataform.id = 9),
+      (dataform.code = 'prj-000'),
+      (dataform.name = ''),
+      (dataform.description = ''),
+      (dataform.star_date_planned = ''),
+      (dataform.end_date_planned = ''),
+      (dataform.start_date_actual = ''),
+      (dataform.end_date_actual = ''),
+      (dataform.status_id = 1),
+      (dataform.phases = []))
   }
 
   function resetDataFormPhase() {
-    dataformPhase.id= uid(),
-    dataformPhase.project_id= '',
-    dataformPhase.name= '',
-    dataformPhase.description= '',
-    dataformPhase.weight= 0.1,
-    dataformPhase.responsible_id= 0,
-    dataformPhase.star_date_planned= '',
-    dataformPhase.end_date_planned= '',
-    dataformPhase.start_date_actual= '',
-    dataformPhase.end_date_actual= '',
-    dataformPhase.tasks= []
+    ;((dataformPhase.id = uid()),
+      (dataformPhase.project_id = ''),
+      (dataformPhase.name = ''),
+      (dataformPhase.description = ''),
+      (dataformPhase.weight = 0.1),
+      (dataformPhase.responsible_id = 0),
+      (dataformPhase.star_date_planned = ''),
+      (dataformPhase.end_date_planned = ''),
+      (dataformPhase.start_date_actual = ''),
+      (dataformPhase.end_date_actual = ''),
+      (dataformPhase.tasks = []))
   }
 
+  
   return {
     dataform,
     dataProjects,
@@ -145,6 +159,7 @@ export const useProjectStore = defineStore('project', () => {
     saveProject,
     deleteProject,
     dataformPhase,
-    savePhase
+    savePhase,
+    saveTask
   }
 })

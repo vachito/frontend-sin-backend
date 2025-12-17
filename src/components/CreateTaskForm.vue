@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref, watchEffect } from 'vue'
+import { useProjectStore } from '@/stores/Project'
 import { uid } from 'uid'
-const props = defineProps({
-    phase_id: {
-        type: [Number, String],
-        required: true
-    }
-})
+
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -35,6 +31,14 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
+
+const store=useProjectStore()
+const props = defineProps({
+    phase_id: {
+        type: [Number, String],
+        required: true
+    }
+})
 //objeto de prueba para el select
 const objSelect = [
     {
@@ -74,8 +78,6 @@ const objPriority = [
 const startDate = ref<DateValue>()
 const endDate = ref<DateValue>()
 
-
-
 const task = reactive({
     id: uid(),
     phase_id: props.phase_id,
@@ -99,6 +101,10 @@ watchEffect(() => {
     ? endDate.value.toString()
     : ''
 })
+
+const handleSubmit = ()=>{
+    store.saveTask(task)
+}
 </script>
 
 <template>
@@ -163,7 +169,7 @@ watchEffect(() => {
             </div>
 
             <SheetFooter>
-                <Button type="submit">
+                <Button type="submit" @click="handleSubmit">
                     Guardar
                 </Button>
                 <SheetClose as-child>
