@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProjectsView from '@/views/projects/ProjectsView.vue'
-import StatusView from '@/views/auth/StatusView.vue'
 import ProjectDetailView from '@/views/projects/ProjectDetailView.vue'
 import DapView from '@/views/DapView.vue'
+import StatusesView from '@/views/Statuses/StatusesView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -29,7 +29,7 @@ const router = createRouter({
         {
           path: 'estados',
           name: 'statuses',
-          component: StatusView,
+          component: StatusesView,
         },
         {
           path: '/muni',

@@ -76,13 +76,6 @@ props.closeDrawer?.()
 
 <template>
     <form novalidate @submit.prevent="handleSubmit">
-
-        
-        <Button @click="() => toast('My first toast')">
-            Give me a toast
-        </Button>
-       
-
         <FieldGroup>
             <FieldSet>
                 <FieldLegend class="text-center">Agregar fase al proyecto</FieldLegend>
