@@ -1,15 +1,6 @@
 <script setup lang="ts">
-const props = defineProps({
-    btnText: {
-        type: String,
-        required: true
-    },
-});
-
-//Shadcn Components
+import { ref } from 'vue';
 import { Button } from '@/components/ui/button'
-
-//Drawer
 import {
     Drawer,
     DrawerClose,
@@ -17,22 +8,29 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer'
 
+const props = defineProps({
+    btnText: {
+        type: String,
+        required: true
+    },
+});
+
+const open = ref(false)
 </script>
 
 <template>
     <div class="flex justify-center">
-        <Drawer>
+        <Drawer v-model:open="open">
             <DrawerTrigger as-child>
                 <Button variant="outline" class="w-full">
                     {{ btnText }}
                 </Button>
             </DrawerTrigger>
             <DrawerContent class="mt-3 md:h-[500px]">
-                <slot name="steperdraw"></slot>
                 <div
-                    class="w-full p-1 space-y-3 text-center lg:mx-auto lg:w-5/12 lg:flex :lgjustify-between lg:gap-6 lg:items-center lg:space-y-0 lg:text-left">
+                    class="w-full p-1 space-y-3 text-center lg:mx-auto lg:w-5/12 lg:flex lg:justify-between lg:gap-6 lg:items-center lg:space-y-0 lg:text-left">
                     <div class="flex-1">
-                         <slot></slot>
+                         <slot :closeDrawer="()=> open=false"></slot>
                     </div>
                 </div>
 

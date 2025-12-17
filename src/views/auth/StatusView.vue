@@ -74,19 +74,31 @@ async function saveTask() {
   console.log("Creando tarea para fase:", createdPhaseId.value, task.value)
   currentStep.value = 3
 }
+
+import { toast } from 'vue-sonner'
+
 </script>
 
 <template>
+  <Button variant="outline" @click="() =>
+    toast('Event has been created', {
+      description: 'Sunday, December 03, 2023 at 9:00 AM',
+      position:'top-center',
+      action: {
+        label: 'Undo',
+        onClick: () => console.log('Undo'),
+      },
+    })
+  ">
+    Show Toast
+  </Button>
+
   <div class="flex flex-col gap-10 w-full mx-auto">
 
     <!-- 🟦 STEPPER -->
     <Stepper v-model="currentStep" class="flex w-10/12 items-start gap-2 mx-auto">
-      <StepperItem
-        v-for="item in steps"
-        :key="item.step"
-        :step="item.step"
-        class="relative flex w-full flex-col items-center justify-center"
-      >
+      <StepperItem v-for="item in steps" :key="item.step" :step="item.step"
+        class="relative flex w-full flex-col items-center justify-center">
         <StepperTrigger>
           <StepperIndicator v-slot="{ step }" class="bg-muted">
             <template v-if="item.icon">
@@ -96,12 +108,9 @@ async function saveTask() {
           </StepperIndicator>
         </StepperTrigger>
 
-        <StepperSeparator
-          v-if="item.step !== steps[steps.length - 1]?.step"
-          class="absolute left-[calc(50%+20px)] right-[calc(-50%+10px)] top-5 
+        <StepperSeparator v-if="item.step !== steps[steps.length - 1]?.step" class="absolute left-[calc(50%+20px)] right-[calc(-50%+10px)] top-5 
           block h-0.5 shrink-0 rounded-full bg-muted 
-          group-data-[state=completed]:bg-primary"
-        />
+          group-data-[state=completed]:bg-primary" />
 
         <div class="flex flex-col items-center">
           <StepperTitle>{{ item.title }}</StepperTitle>
@@ -112,7 +121,7 @@ async function saveTask() {
 
     <!-- 🟩 CONTENIDO SEGÚN PASO -->
     <div class="w-full max-w-lg mx-auto">
-      
+
       <!-- PASO 1: Crear Fase -->
       <div v-if="currentStep === 1" class="flex flex-col gap-4">
         <Input v-model="phase.name" placeholder="Nombre de la fase" />

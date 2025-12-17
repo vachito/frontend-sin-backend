@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { useProjectStore } from '@/stores/Project'
-
+import { Toaster } from './components/ui/sonner'
 const store=useProjectStore()
 onMounted(()=>{
   const projectStorage=localStorage.getItem('projects')
@@ -13,5 +13,6 @@ onMounted(()=>{
 </script>
 
 <template>
+  <Toaster />
   <RouterView />
 </template>

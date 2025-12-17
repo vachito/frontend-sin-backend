@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import type { DateValue } from '@internationalized/date'
+import { toast } from 'vue-sonner'
 //Calendar
 import GeneralDatePicker from './GeneralDatePicker.vue'
 
@@ -33,6 +34,9 @@ import {
 } from '@/components/ui/sheet'
 
 const store=useProjectStore()
+const startDate = ref<DateValue>()
+const endDate = ref<DateValue>()
+const open=ref(false)
 const props = defineProps({
     phase_id: {
         type: [Number, String],
@@ -75,8 +79,7 @@ const objPriority = [
     },
 ]
 
-const startDate = ref<DateValue>()
-const endDate = ref<DateValue>()
+
 
 const task = reactive({
     id: uid(),
@@ -102,20 +105,45 @@ watchEffect(() => {
     : ''
 })
 
+const resetTask = ()=> {
+    task.id = uid(),
+    task.phase_id= props.phase_id,
+    task.name= '',
+    task.description= '',
+    task.responsible_id= null,
+    task.is_complete= false,
+    task.star_date_planned=startDate.value?.toString(),
+    task.end_date_planned=endDate.value?.toString(),
+    task.start_date_actual= '',
+    task.end_date_actual= '',
+    task.priority= ''
+}
+
+const closeSheet = () =>{
+    open.value=false
+}
+
 const handleSubmit = ()=>{
     store.saveTask(task)
+    resetTask()
+    closeSheet()
+    toast.success("Tarea creada", {
+        description: "La tarea se ha agregado a la fase correctamente",
+        duration: 2000,
+        position: 'top-center'
+    })
 }
 </script>
 
 <template>
-    <Sheet>
+    <Sheet v-model:open="open" class="h-full ">
         <SheetTrigger as-child>
             <Button variant="secondary">
                 Agregar Tarea
             </Button>
         </SheetTrigger>
 
-        <SheetContent>
+        <SheetContent class="overflow-y-scroll">
             <SheetHeader>
                 <SheetTitle>Agregar una tarea a la fase</SheetTitle>
                 <SheetDescription>

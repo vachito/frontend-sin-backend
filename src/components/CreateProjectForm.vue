@@ -1,37 +1,48 @@
 <script setup lang="ts">
-    import { ref, watchEffect } from 'vue'
-    import { useProjectStore } from '@/stores/Project'
-    //Calendar
-    import type { DateValue } from '@internationalized/date'
-    import GeneralDatePicker from './GeneralDatePicker.vue'
-    import { Button } from '@/components/ui/button'
-    //Field form
-    import {
-        Field,
-        FieldGroup,
-        FieldLabel,
-        FieldSet,
-        FieldLegend,
-        FieldDescription
-    } from '@/components/ui/field'
+import { ref, watchEffect } from 'vue'
+import { useProjectStore } from '@/stores/Project'
+//Calendar
+import type { DateValue } from '@internationalized/date'
+import GeneralDatePicker from './GeneralDatePicker.vue'
+import { Button } from '@/components/ui/button'
+import { toast } from 'vue-sonner'
+//Field form
+import {
+    Field,
+    FieldGroup,
+    FieldLabel,
+    FieldSet,
+    FieldLegend,
+    FieldDescription
+} from '@/components/ui/field'
 
-    import { Input } from '@/components/ui/input'
-    import { Textarea } from '@/components/ui/textarea'
-    import router from '@/router'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import router from '@/router'
 
-    const store=useProjectStore()
-    const startDate= ref<DateValue>()
-    const endDate= ref<DateValue>()
+const props = defineProps({
+    closeDrawer: Function
+})
 
-    watchEffect(()=>{
-        store.dataform.star_date_planned=startDate.value?.toString()
-        store.dataform.end_date_planned=endDate.value?.toString()
+const store = useProjectStore()
+const startDate = ref<DateValue>()
+const endDate = ref<DateValue>()
+
+watchEffect(() => {
+    store.dataform.star_date_planned = startDate.value?.toString()
+    store.dataform.end_date_planned = endDate.value?.toString()
+})
+
+const handlesubmit = () => {
+    store.saveProject()
+    toast.success("Proyecto creado", {
+        description: "El proyecto se a creado correctamente",
+        duration: 2000,
+        position: 'top-center'
     })
-
-    const handlesubmit = () =>{
-        store.saveProject()
-        router.push({name:'list-project'})
-    }
+    props.closeDrawer?.()
+    router.push({ name: 'list-project' })
+}
 </script>
 
 <template>
@@ -65,14 +76,14 @@
                                 <FieldLabel for="checkout-7j9-card-name-43j">
                                     Fecha de inicio
                                 </FieldLabel>
-                                <GeneralDatePicker v-model="startDate"/>
+                                <GeneralDatePicker v-model="startDate" />
                             </Field>
 
                             <Field>
                                 <FieldLabel for="checkout-7j9-card-number-uw1">
                                     Fecha estimada para finalizar
                                 </FieldLabel>
-                                <GeneralDatePicker v-model="endDate"/>
+                                <GeneralDatePicker v-model="endDate" />
                             </Field>
 
                             <Field class=" col-start-1 col-end-3">
@@ -84,10 +95,7 @@
                             </Field>
                         </div>
                     </FieldGroup>
-                    <Button 
-                        type="submit"
-                        class="w-11/12 md:w-20 my-7 mx-auto"
-                    >
+                    <Button type="submit" class="w-11/12 md:w-20 my-7 mx-auto">
                         Guardar
                     </Button>
                 </div>

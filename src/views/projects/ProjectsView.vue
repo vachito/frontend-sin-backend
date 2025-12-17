@@ -53,13 +53,15 @@ const filteredProject = computed(()=>{
       </div>
       <div class="flex sm:flex-col sm:justify-start sm:items-center center-center gap-1 mb-3 sm:mb-0">
         <p class=" text-xs">Total</p>
-        <p class=" text-xs">08</p>
+        <p class=" text-xs">{{ store.dataProjects.length }}</p>
       </div>
     </div>
 
     <div class="flex flex-col sm:flex-row gap-5 w-full sm:w-auto">
       <GeneralDrawer :btn-text="btnText" :title="title" :description="description">
-        <CreateProjectForm />
+        <template #default="{closeDrawer}">
+          <CreateProjectForm :closeDrawer="closeDrawer"/>
+        </template>
       </GeneralDrawer>
 
       <Button variant="outline" @click="((CardsGrid = true), (CardsList = false))">

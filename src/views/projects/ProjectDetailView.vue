@@ -17,7 +17,7 @@ onMounted(()=>{
 })
 
 const store = useProjectStore()
-const isOpen = ref(false)
+const isOpen = ref(true)
 
 const emp = {
   title: '¡ Aún no tienes fases registradas!',

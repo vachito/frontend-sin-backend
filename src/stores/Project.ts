@@ -51,7 +51,7 @@ export const useProjectStore = defineStore('project', () => {
   const dataProject = ref<IProject | null>(null)
   const dataform = reactive<IProject>({
     id: uid(),
-    code: 'prj-09',
+    code: `prj-${uid()}`,
     name: '',
     description: '',
     star_date_planned: '',
@@ -114,17 +114,16 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   function saveTask(dataTask:object) {
-    console.log(dataTask);
-    console.log(dataProjects.value.phases);
+    const project = dataProjects.value.find(pro => pro.phases.some(phase => phase.id === dataTask.phase_id));
+    const projectIndex = dataProjects.value.findIndex(pro => pro.phases.some(phase => phase.id === dataTask.phase_id));
+    const phaseIndex = project.phases.findIndex(phase => phase.id === dataTask.phase_id);
     
-    // const i = dataProjects.value.
-    // dataProjects.value[i]?.phases.push({ ...dataformPhase, tasks: [...dataformPhase.tasks] })
-    // resetDataFormPhase()
+    dataProjects.value[projectIndex]?.phases[phaseIndex]?.tasks.push({...dataTask})
   }
 
   function resetDataForm() {
     ;((dataform.id = 9),
-      (dataform.code = 'prj-000'),
+      (dataform.code = `prj-${uid()}`),
       (dataform.name = ''),
       (dataform.description = ''),
       (dataform.star_date_planned = ''),
@@ -137,7 +136,6 @@ export const useProjectStore = defineStore('project', () => {
 
   function resetDataFormPhase() {
     ;((dataformPhase.id = uid()),
-      (dataformPhase.project_id = ''),
       (dataformPhase.name = ''),
       (dataformPhase.description = ''),
       (dataformPhase.weight = 0.1),

@@ -10,13 +10,12 @@ import {
     FieldLegend,
     FieldDescription
 } from '@/components/ui/field'
-
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { toast } from 'vue-sonner'
 //Calendar
 import GeneralDatePicker from './GeneralDatePicker.vue'
-
 //selecct
 import {
     Select,
@@ -25,10 +24,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-
 //tipo de dato para fecha
 import type { DateValue } from '@internationalized/date'
 //objeto de prueba para el select
+
+const props=defineProps({
+    closeDrawer:Function
+})
 const objSelect = [
     {
         id: 1,
@@ -63,11 +65,24 @@ watchEffect(() => {
 
 const handleSubmit = () => {
     store.savePhase()
+    toast.success("Fase creada",{
+        description:"La fase fue agregada correctamente al proyecto",
+        duration:2000,
+        position:'top-center'
+    })
+props.closeDrawer?.()
 }
 </script>
 
 <template>
     <form novalidate @submit.prevent="handleSubmit">
+
+        
+        <Button @click="() => toast('My first toast')">
+            Give me a toast
+        </Button>
+       
+
         <FieldGroup>
             <FieldSet>
                 <FieldLegend class="text-center">Agregar fase al proyecto</FieldLegend>
