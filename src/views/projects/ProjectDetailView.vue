@@ -32,7 +32,7 @@ const description = ref('Llena todos los datos solicitados')
 <template>
   <div class="space-y-5">
     <Card
-      class="max-w-100% flex flex-col sm:flex-row sm:justify-between items-center gap-3 hover:border-indigo-200 hover:-translate-y-0.5 transition-all"
+      class="max-w-100% flex flex-col sm:flex-row sm:justify-between items-center gap-3 hover:border-indigo-200 hover:-translate-y-0.5 transition-all border-sidebar-border"
     >
       <CardHeader class="flex flex-col gap-5 w-30">
         <CardTitle>{{ store.dataProject.name }}</CardTitle>
@@ -68,7 +68,7 @@ const description = ref('Llena todos los datos solicitados')
       </CardContent>
     </Card>
 
-    <Card class="max-w-100% bg-sidebar">
+    <Card class="max-w-100% bg-sidebar border-sidebar-border">
       <Collapsible v-model:open="isOpen" class="flex w-full flex-col gap-2">
         <div class="flex justify-between mr-6">
           <div class="flex gap-2">

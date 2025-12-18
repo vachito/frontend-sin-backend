@@ -6,7 +6,7 @@ import type { ColumnDef } from '@tanstack/vue-table'
 import DropdownAction from '@/components/payments/data-table-dropdown.vue'
 
 //para reordenamiento
-import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
+import { ArrowUpDown } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 
 interface Istatuses {
@@ -49,14 +49,13 @@ export const columns: ColumnDef<Istatuses>[] = [
     cell: ({ row }) => {
       const status = row.original
 
-      return h(
-        'div',
-        { class: 'relative' },
-        h(DropdownAction, {
+      return h('div',{ class: 'relative' },h(DropdownAction, {
           status,
-        }),
-      )
+        }))
     },
+  },
+]
+
     // {
     //   accessorKey: 'responsible_id',
     //   header: ({ column }) => {
@@ -108,7 +107,7 @@ export const columns: ColumnDef<Istatuses>[] = [
     //   },
     //   cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('end_date_planned')),
     // },
-  },
+  
 
   // {
   //   accessorKey: 'amount',
@@ -147,4 +146,3 @@ export const columns: ColumnDef<Istatuses>[] = [
   //   },
   //   cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('email')),
   // },
-]

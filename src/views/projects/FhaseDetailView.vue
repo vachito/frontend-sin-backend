@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/button'
 </script>
 
 <template>
-  <Card class="max-w-100% bg-background">
+  <Card class="max-w-100% bg-background dark:border-sidebar-border">
     <CardHeader class="flex gap-3 items-center">
       <CardTitle class="text-xl">{{ phase.name }}</CardTitle>
     </CardHeader>
@@ -43,7 +43,7 @@ import { Button } from '@/components/ui/button'
         </div>
       </div>
 
-      <Card class="max-w-100% bg-background">
+      <Card class="max-w-100% bg-background border dark:border-sidebar-border shadow-lg">
       <Collapsible v-model:open="isOpen" class="flex w-full flex-col gap-2">
         <div class="flex justify-between mr-6">
           <div class="flex gap-2">

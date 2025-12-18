@@ -57,8 +57,8 @@ const table = useVueTable({
 <template>
   <div class="flex items-center py-4">
     <Input class="max-w-sm" placeholder="Filtrar nombre de estado..."
-      :model-value="table.getColumn('id')?.getFilterValue() as string"
-      @update:model-value=" table.getColumn('id')?.setFilterValue($event)" />
+      :model-value="table.getColumn('name')?.getFilterValue() as string"
+      @update:model-value=" table.getColumn('name')?.setFilterValue($event)" />
   </div>
 
   <div class="border rounded-md">

@@ -1,16 +1,23 @@
 <script setup lang="ts">
 import { MoreHorizontal } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from '@/components/ui/dropdown-menu'
+import {Edit, Trash2} from 'lucide-vue-next'
 defineProps<{
-  phase: {
-    project_id: string
+  status: {
+    id: string
   }
 }>()
 
-function copy(project_id: string) {
-  navigator.clipboard.writeText(project_id)
+function copy(id: string) {
+  navigator.clipboard.writeText(id)
 }
 </script>
 
@@ -25,8 +32,8 @@ function copy(project_id: string) {
     <DropdownMenuContent align="end">
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuItem @click="copy(phase.project_id)">Editar</DropdownMenuItem>
-      <DropdownMenuItem>Eiminar</DropdownMenuItem>
+      <DropdownMenuItem @click="copy(status.id)"><Edit/>Editar</DropdownMenuItem>
+      <DropdownMenuItem @click="copy(status.id)"><Trash2/>Eiminar</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>

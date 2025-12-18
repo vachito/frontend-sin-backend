@@ -11,7 +11,7 @@ import { CalendarDays, ChevronsRight } from 'lucide-vue-next'
 </script>
 
 <template>
-  <Card class="max-w-100% bg-background">
+  <Card class="max-w-100% bg-background shadow-lg dark:border-sidebar-border">
     <CardHeader class="flex gap-3 items-center">
       <CardTitle class="">{{ task.name }}</CardTitle>
     </CardHeader>

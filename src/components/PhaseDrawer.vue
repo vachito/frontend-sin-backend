@@ -29,7 +29,7 @@ const closeDrawer = () =>{
 
       <DrawerClose as-child>
         <div class="flex md:w-5/12 md:mx-auto gap-2">
-          <Button variant="outline" class="w-11/12 md:w-20 mt-7">
+          <Button variant="outline" class="w-11/12 md:w-20  md:-mt-9">
             Cancelar
           </Button>
         </div>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
 import { useStatusesStore } from '@/stores/Statuses'
 import CreateStatusFormView from './CreateStatusFormView.vue'
 import GeneralEmpty from '@/components/GeneralEmpty.vue'
@@ -7,7 +6,6 @@ import DataTable from '@/components/payments/data-table.vue'
 import { columns } from '@/components/payments/columns'
 const store = useStatusesStore()
 
-const data = computed(()=> store.Statuses)
 const emp = {
   title: '¡ Aún no tienes estados registrados!',
   description: 'Aún no has creado estados. Podemos iniciar creando tu primer estado.',

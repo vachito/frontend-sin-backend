@@ -53,7 +53,7 @@ const handlesubmit = () => {
                 <FieldDescription class="text-center">
                     Llena el formulario para crear el proyecto
                 </FieldDescription>
-                <div class="flex gap-5">
+                <div class="flex flex-col">
                     <FieldGroup>
                         <div class="md:grid md:grid-cols-2 gap-2.5">
                             <Field>
@@ -95,9 +95,11 @@ const handlesubmit = () => {
                             </Field>
                         </div>
                     </FieldGroup>
-                    <Button type="submit" class="w-11/12 md:w-20 my-7 mx-auto">
-                        Guardar
-                    </Button>
+                    <div class="flex justify-end">
+                        <Button type="submit" class="mt-4">
+                            Guardar
+                        </Button>
+                    </div>
                 </div>
             </FieldSet>
         </FieldGroup>
