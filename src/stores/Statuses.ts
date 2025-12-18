@@ -1,39 +1,41 @@
 import { defineStore } from "pinia";
-import { ref, watch } from "vue";
-import type{ Ref } from "vue";
+import { ref } from "vue";
 import { uid } from "uid";
-import router from "@/router";
 
+interface Istatus {
+    id: string
+    name: string
+}
 export const useStatusesStore = defineStore('statuses', () => {
-    const Statuses:Ref<Array<string>> = ref([])
+    const Statuses = ref<Istatus[]>([])
 
-    const dataStatus=ref({
-        id:uid(),
-        name:''
+    const dataStatus = ref({
+        name: ''
     })
 
-    watch(Statuses, ()=>{
-        saveStatusLocalStorage()
-    },{deep:true})
+    
+        const statusesStorage = localStorage.getItem('statuses')
+        if (statusesStorage) {
+            Statuses.value = JSON.parse(statusesStorage)
+        }
+    
 
-    function saveStatus(){
+    function saveStatus() {
         Statuses.value.push({
-            id:dataStatus.value.id,
-            name:dataStatus.value.name
+            id: uid(),
+            name: dataStatus.value.name
         })
-        dataStatus.value.id=uid()
-        dataStatus.value.name=''
         saveStatusLocalStorage()
-        router.push({name:'statuses'})
+        dataStatus.value.name = ''
     }
 
-    function saveStatusLocalStorage (){
-        localStorage.setItem('statuses',JSON.stringify(Statuses.value))
-    }
+    function saveStatusLocalStorage() {
+        localStorage.setItem('statuses', JSON.stringify(Statuses.value))
+    }    
 
     return {
-        dataStatus,
-        Statuses,
-        saveStatus
-    }
+    dataStatus,
+    Statuses,
+    saveStatus
+}
 })

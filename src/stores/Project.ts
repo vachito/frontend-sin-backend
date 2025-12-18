@@ -74,13 +74,6 @@ export const useProjectStore = defineStore('project', () => {
     end_date_actual: '',
     tasks: [],
   })
-  // function initProjects() {
-  //   dataProjects.value = [...projects]
-  //   const projectStorage=localStorage.getItem('projects')
-  //   if(projectStorage){
-  //     dataProjects.value = JSON.parse(projectStorage)
-  //   }
-  // }
 
   watch(
     dataProjects,
@@ -113,16 +106,16 @@ export const useProjectStore = defineStore('project', () => {
     resetDataFormPhase()
   }
 
-  function saveTask(dataTask:object) {
+  function saveTask(dataTask: object) {
     const project = dataProjects.value.find(pro => pro.phases.some(phase => phase.id === dataTask.phase_id));
     const projectIndex = dataProjects.value.findIndex(pro => pro.phases.some(phase => phase.id === dataTask.phase_id));
     const phaseIndex = project.phases.findIndex(phase => phase.id === dataTask.phase_id);
-    
-    dataProjects.value[projectIndex]?.phases[phaseIndex]?.tasks.push({...dataTask})
+
+    dataProjects.value[projectIndex]?.phases[phaseIndex]?.tasks.push({ ...dataTask })
   }
 
   function resetDataForm() {
-    ;((dataform.id = 9),
+    ; ((dataform.id = 9),
       (dataform.code = `prj-${uid()}`),
       (dataform.name = ''),
       (dataform.description = ''),
@@ -135,7 +128,7 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   function resetDataFormPhase() {
-    ;((dataformPhase.id = uid()),
+    ; ((dataformPhase.id = uid()),
       (dataformPhase.name = ''),
       (dataformPhase.description = ''),
       (dataformPhase.weight = 0.1),
@@ -147,6 +140,11 @@ export const useProjectStore = defineStore('project', () => {
       (dataformPhase.tasks = []))
   }
 
+  
+    const projectStorage = localStorage.getItem('projects')
+    if (projectStorage) {
+      dataProjects.value = JSON.parse(projectStorage)
+    }
   
   return {
     dataform,

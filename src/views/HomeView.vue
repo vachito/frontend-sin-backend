@@ -22,17 +22,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import ModeToggle from "@/components/ModeToggle.vue"
-
-//import { payments } from "@/lib/data"
-//import { onMounted, ref } from "vue"
-//import type { Payment } from '@/components/payments/columns'
-//const data = ref<Payment[]>([])
-// onMounted(() => {
-//   // Simulate data fetching
-//   setTimeout(() => {
-//     data.value = payments
-//   }, 1000)
-// })
 </script>
 
 <template>
