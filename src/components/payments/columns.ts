@@ -9,101 +9,107 @@ import DropdownAction from '@/components/payments/data-table-dropdown.vue'
 import { ArrowUpDown, ChevronDown } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 
-interface IPhase {
-  project_id: number
+interface Istatuses {
+  id: number | string
   name: string
-  description: string
-  weight: number
-  responsible_id: number
-  star_date_planned: string
-  end_date_planned: string
-  start_date_actual: string
-  end_date_actual: string
 }
 
-export const columns: ColumnDef<IPhase>[] = [
+export const columns: ColumnDef<Istatuses>[] = [
   {
-    accessorKey: 'project_id',
+    accessorKey: 'id',
     header: ({ column }) => {
-      return h(Button, {
-        variant: 'ghost',
-        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-      }, () => ['Project_id', h(ArrowUpDown, { class: 'ml-2 h-3 w-3 hover:cursor-pointer' })])
+      return h(
+        Button,
+        {
+          variant: 'ghost',
+          onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+        },
+        () => ['id', h(ArrowUpDown, { class: 'ml-2 h-3 w-3 hover:cursor-pointer' })],
+      )
     },
-    cell: ({ row }) => h('div', { class: 'text-center font-medium' }, row.getValue('project_id')),
-  },
-  {
-    accessorKey: 'responsible_id',
-    header: ({ column }) => {
-      return h(Button, {
-        variant: 'ghost',
-        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-      }, () => ['Responsable', h(ArrowUpDown, { class: 'ml-2 h-3 w-3 hover:cursor-pointer' })])
-    },
-    cell: ({ row }) => h('div', { class: 'text-center font-medium' }, row.getValue('responsible_id')),
+    cell: ({ row }) => h('div', { class: 'text-left font-medium' }, row.getValue('id')),
   },
   {
     accessorKey: 'name',
     header: ({ column }) => {
-      return h(Button, {
-        variant: 'ghost',
-        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-      }, () => ['Nombre', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
+      return h(
+        Button,
+        {
+          variant: 'ghost',
+          onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+        },
+        () => ['Nombre', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })],
+      )
     },
     cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('name')),
-  },
-  {
-    accessorKey: 'description',
-    header: ({ column }) => {
-      return h(Button, {
-        variant: 'ghost',
-        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-      }, () => ['Descripcion', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
-    },
-    cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('description')),
-  },
-  {
-    accessorKey: 'weight',
-    header: ({ column }) => {
-      return h(Button, {
-        variant: 'ghost',
-        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-      }, () => ['Prioridad', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
-    },
-    cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('weight')),
-  },
-  {
-    accessorKey: 'star_date_planned',
-    header: ({ column }) => {
-      return h(Button, {
-        variant: 'ghost',
-        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-      }, () => ['Fecha inicio', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
-    },
-    cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('star_date_planned')),
-  },
-  {
-    accessorKey: 'end_date_planned',
-    header: ({ column }) => {
-      return h(Button, {
-        variant: 'ghost',
-        onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
-      }, () => ['Fecha inicio', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
-    },
-    cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('end_date_planned')),
   },
   {
     id: 'actions',
     enableHiding: true,
     cell: ({ row }) => {
-      const phase = row.original
+      const status = row.original
 
-      return h('div', { class: 'relative' }, h(DropdownAction, {
-        phase,
-      }))
+      return h(
+        'div',
+        { class: 'relative' },
+        h(DropdownAction, {
+          status,
+        }),
+      )
     },
+    // {
+    //   accessorKey: 'responsible_id',
+    //   header: ({ column }) => {
+    //     return h(Button, {
+    //       variant: 'ghost',
+    //       onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+    //     }, () => ['Responsable', h(ArrowUpDown, { class: 'ml-2 h-3 w-3 hover:cursor-pointer' })])
+    //   },
+    //   cell: ({ row }) => h('div', { class: 'text-center font-medium' }, row.getValue('responsible_id')),
+    // },
+
+    // {
+    //   accessorKey: 'description',
+    //   header: ({ column }) => {
+    //     return h(Button, {
+    //       variant: 'ghost',
+    //       onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+    //     }, () => ['Descripcion', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
+    //   },
+    //   cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('description')),
+    // },
+    // {
+    //   accessorKey: 'weight',
+    //   header: ({ column }) => {
+    //     return h(Button, {
+    //       variant: 'ghost',
+    //       onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+    //     }, () => ['Prioridad', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
+    //   },
+    //   cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('weight')),
+    // },
+    // {
+    //   accessorKey: 'star_date_planned',
+    //   header: ({ column }) => {
+    //     return h(Button, {
+    //       variant: 'ghost',
+    //       onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+    //     }, () => ['Fecha inicio', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
+    //   },
+    //   cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('star_date_planned')),
+    // },
+    // {
+    //   accessorKey: 'end_date_planned',
+    //   header: ({ column }) => {
+    //     return h(Button, {
+    //       variant: 'ghost',
+    //       onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
+    //     }, () => ['Fecha inicio', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
+    //   },
+    //   cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('end_date_planned')),
+    // },
   },
-  
+
   // {
   //   accessorKey: 'amount',
   //   header: ({column}) =>{
@@ -111,7 +117,7 @@ export const columns: ColumnDef<IPhase>[] = [
   //       variant: 'ghost',
   //       onClick: ()=> column.toggleSorting(column.getIsSorted() === 'asc'),
   //     }, () => ['Amount', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })])
-  //   }, 
+  //   },
   //   cell: ({ row }) => {
   //     const amount = Number.parseFloat(row.getValue('amount'))
   //     const formatted = new Intl.NumberFormat('es-GT', {
