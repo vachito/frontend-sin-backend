@@ -47,11 +47,9 @@ export const columns: ColumnDef<Istatuses>[] = [
     id: 'actions',
     enableHiding: true,
     cell: ({ row }) => {
-      const status = row.original
+      const id = row.original
 
-      return h('div',{ class: 'relative' },h(DropdownAction, {
-          status,
-        }))
+      return h('div',{ class: 'relative' },h(DropdownAction, id))
     },
   },
 ]
