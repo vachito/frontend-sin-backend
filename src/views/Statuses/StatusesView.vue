@@ -15,7 +15,7 @@ const emp = {
 <template>
   <div>
     <CreateStatusFormView />
-    <GeneralEmpty v-if="store.Statuses.length === 0" class="mt-10" :emp="emp" />
+    <GeneralEmpty v-if="store.Statuses.length === 0" class="mt-20" :emp="emp" />
 
     <div v-else class="gap-7 mt-10 w-3/6 mx-auto">
       <DataTable :key="store.Statuses.length" :data="store.Statuses" :columns="columns" />
