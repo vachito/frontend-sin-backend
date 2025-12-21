@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useStatusesStore } from '@/stores/Statuses'
 import Button from '@/components/ui/button/Button.vue'
 import Input from '@/components/ui/input/Input.vue'
@@ -10,18 +10,28 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 const store = useStatusesStore()
 const open = ref(false)
 
-const closePopover = () => {
+const closePopovers = () => {
   open.value = false
 }
 
 const handleSave = () => {
   store.saveStatus()
-  closePopover()
+  closePopovers()
 }
 
 const handleCancel = () => {
-  closePopover()
+  closePopovers()
 }
+
+const openForm = () =>{
+  if(store.isEdit){
+    open.value=true
+  }
+}
+
+watch(store.dataStatus, () =>{
+  openForm()
+})
 </script>
 
 <template>
@@ -44,8 +54,8 @@ const handleCancel = () => {
             </div>
 
             <div class="grid grid-cols-2 items-center gap-4 mt-3">
-              <Button type="button" @click="handleSave">Guardar</Button>
               <Button type="button" @click="handleCancel">Cancelar</Button>
+              <Button type="button" @click="handleSave">Guardar</Button>
             </div>
           </div>
         </div>

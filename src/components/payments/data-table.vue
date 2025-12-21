@@ -28,7 +28,6 @@ import {
 import { valueUpdater } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-//import { useDataTable } from './GlobalFilter'
 const props = defineProps<{
   columns: ColumnDef<TData, TValue>[]
   data: TData[]

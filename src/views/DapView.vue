@@ -2,17 +2,8 @@
     import { Label } from '@/components/ui/label'
     import { Switch } from '@/components/ui/switch'
     import GeneralDropDownActions from '@/components/GeneralDropDownActions.vue';
-
-    const obj=[
-        {
-            id:1,
-            name:'Pendiente'
-        },
-        {
-            id:2,
-            name:'En progreso'
-        },
-    ]
+    import { useStatusesStore } from '@/stores/Statuses';
+    const store=useStatusesStore()
 </script>
 
 <template>
@@ -26,5 +17,5 @@
         <Label for="airplane-mode">Airplane Mode</Label>
     </div>
 
-    <GeneralDropDownActions :object-actions="obj"/>
+    <GeneralDropDownActions :object-actions="store.Statuses"/>
 </template>

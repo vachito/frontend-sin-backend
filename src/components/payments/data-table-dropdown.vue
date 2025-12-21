@@ -10,15 +10,12 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu'
 import {Edit, Trash2} from 'lucide-vue-next'
-defineProps<{
-  status: {
-    id: string
-  }
-}>()
+import { useStatusesStore } from '@/stores/Statuses'
 
-function copy(id: string) {
-  navigator.clipboard.writeText(id)
-}
+const store=useStatusesStore()
+defineProps<{
+  id: string
+}>()
 </script>
 
 <template>
@@ -32,8 +29,8 @@ function copy(id: string) {
     <DropdownMenuContent align="end">
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuItem @click="copy(status.id)"><Edit/>Editar</DropdownMenuItem>
-      <DropdownMenuItem @click="copy(status.id)"><Trash2/>Eiminar</DropdownMenuItem>
+      <DropdownMenuItem @click="store.editStatus(id)"><Edit/>Editar</DropdownMenuItem>
+      <DropdownMenuItem @click="store.deleteStatus(id)"><Trash2/>Eiminar</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>

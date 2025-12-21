@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { uid } from "uid";
 
 interface Istatus {
@@ -8,34 +8,52 @@ interface Istatus {
 }
 export const useStatusesStore = defineStore('statuses', () => {
     const Statuses = ref<Istatus[]>([])
+    watch(Statuses,()=>{
+        saveStatusLocalStorage()
+    },{deep:true})
 
     const dataStatus = ref({
+        id:'',
         name: ''
     })
 
-    
-        const statusesStorage = localStorage.getItem('statuses')
-        if (statusesStorage) {
-            Statuses.value = JSON.parse(statusesStorage)
-        }
-    
+    const findState = ref<Istatus>({id:'',name:''})
+
+    const statusesStorage = localStorage.getItem('statuses')
+    if (statusesStorage) {
+        Statuses.value = JSON.parse(statusesStorage)
+    }
 
     function saveStatus() {
         Statuses.value.push({
             id: uid(),
             name: dataStatus.value.name
         })
-        saveStatusLocalStorage()
+        dataStatus.value.id =''
         dataStatus.value.name = ''
+    }
+
+    const isEdit=computed(()=> dataStatus.value.id ? true : false)
+    
+    function editStatus(id:string) {
+        findState.value = Statuses.value.find(s => s.id === id)
+        Object.assign(dataStatus.value,findState.value)
+    }
+
+    function deleteStatus(id:string) {
+        Statuses.value = Statuses.value.filter(s => s.id !== id)
     }
 
     function saveStatusLocalStorage() {
         localStorage.setItem('statuses', JSON.stringify(Statuses.value))
-    }    
+    }
 
     return {
-    dataStatus,
-    Statuses,
-    saveStatus
-}
+        dataStatus,
+        Statuses,
+        isEdit,
+        saveStatus,
+        editStatus,
+        deleteStatus,
+    }
 })
