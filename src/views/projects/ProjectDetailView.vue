@@ -2,17 +2,19 @@
 import { ref, onMounted } from 'vue'
 import { useProjectStore } from '@/stores/Project'
 import { useStatusesStore } from '@/stores/Statuses';
+
 import FhaseDetailView from './FhaseDetailView.vue'
 import PhaseDrawer from '@/components/PhaseDrawer.vue'
-
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { CalendarDays, ChevronsRight, ChevronsUpDown } from 'lucide-vue-next'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Button } from '@/components/ui/button'
 import GeneralEmpty from '@/components/GeneralEmpty.vue'
 import GeneralDropDownActions from '@/components/GeneralDropDownActions.vue';
+
+import { CalendarDays, ChevronsRight, ChevronsUpDown } from 'lucide-vue-next'
+
 onMounted(()=>{
   store.dataformPhase.project_id = store.dataProject?.id
 })

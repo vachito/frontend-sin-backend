@@ -5,7 +5,8 @@ defineProps({
     required: true,
   },
 })
-
+import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { CalendarDays, ChevronsRight } from 'lucide-vue-next'
 </script>
@@ -21,7 +22,11 @@ import { CalendarDays, ChevronsRight } from 'lucide-vue-next'
 
       <div class="flex justify-between mt-5">
         <p>Responsable: <span class="text-chart-2 font-bold">{{ task.responsible_id === 1 ? 'Juan' : '' }}</span></p>
-        <p>Estado: <span class="bg-chart-1 p-1 rounded-sm text-background font-semibold">{{ task.is_complete === false ? 'Incompleta' : 'Completa' }}</span></p>
+        <div class="flex gap-3 items-end">
+          <Switch :default-value="false" id="airplane-mode" />
+          <p>Estado: <span class="bg-chart-1 p-1 rounded-sm text-background font-semibold">{{ task.is_complete === false ? 'Incompleta' : 'Completa' }}</span></p>
+        </div>
+        
         <p>Prioridad: <span class="text-chart-2 font-bold">{{ task.priority }}</span></p>
 
         <div class="text-center flex items-center gap-2">
