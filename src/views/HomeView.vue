@@ -52,7 +52,7 @@ import ModeToggle from "@/components/ModeToggle.vue"
         </div>
       </header>
 
-      <div class="min-h-[100vh] p-2">
+      <div class="p-2 mt-0">
         <RouterView />
       </div>
     </SidebarInset>

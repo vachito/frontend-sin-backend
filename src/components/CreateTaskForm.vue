@@ -129,7 +129,7 @@ const handleSubmit = ()=>{
     closeSheet()
     toast.success("Tarea creada", {
         description: "La tarea se ha agregado a la fase correctamente",
-        duration: 2000,
+        duration: 3000,
         position: 'top-center'
     })
 }

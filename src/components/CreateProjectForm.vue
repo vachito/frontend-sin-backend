@@ -37,7 +37,7 @@ const handlesubmit = () => {
     store.saveProject()
     toast.success("Proyecto creado", {
         description: "El proyecto se a creado correctamente",
-        duration: 2000,
+        duration: 3000,
         position: 'top-center'
     })
     props.closeDrawer?.()

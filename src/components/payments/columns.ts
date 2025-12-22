@@ -1,14 +1,14 @@
 //mostrar la fila
 import { h } from 'vue'
 import type { ColumnDef } from '@tanstack/vue-table'
-
+import { useStatusesStore } from '@/stores/Statuses'
 //acciones de la fila
 import DropdownAction from '@/components/payments/data-table-dropdown.vue'
 
 //para reordenamiento
 import { ArrowUpDown } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
-
+import Input from '../ui/input/Input.vue'
 interface Istatuses {
   id: number | string
   name: string
@@ -31,25 +31,52 @@ export const columns: ColumnDef<Istatuses>[] = [
   },
   {
     accessorKey: 'name',
-    header: ({ column }) => {
-      return h(
+    header: ({ column }) =>
+      h(
         Button,
         {
           variant: 'ghost',
           onClick: () => column.toggleSorting(column.getIsSorted() === 'asc'),
         },
         () => ['Nombre', h(ArrowUpDown, { class: 'ml-2 h-3 w-3' })],
-      )
+      ),
+
+    cell: ({ row }) => {
+      const store = useStatusesStore();
+      const status = row.original;
+
+      if (store.editingId === status.id) {
+        return h('div', { class: 'flex items-center gap-2' }, [
+          h(Input, {
+            class: 'h-8',
+            modelValue: store.editingName,
+            'onUpdate:modelValue': (value: string) => (store.editingName = value),
+          }),
+          h(
+            Button,
+            { onClick: () => store.updateStatus(), size: 'sm' },
+            () => 'Guardar',
+          ),
+
+          h(
+            Button,
+            { variant: 'outline', onClick: () => store.cancelEditing(), size: 'sm' },
+            () => 'Cancelar',
+          ),
+        ]);
+      }
+
+      return h('span', status.name);
     },
-    cell: ({ row }) => h('div', { class: 'lowercase' }, row.getValue('name')),
   },
   {
     id: 'actions',
     enableHiding: true,
     cell: ({ row }) => {
-      const id = row.original
+      const status_id = row.original.id
+      const status_name = row.original.name
 
-      return h('div',{ class: 'relative' },h(DropdownAction, id))
+      return h('div',{ class: 'relative' },h(DropdownAction, {status_id,status_name}))
     },
   },
 ]

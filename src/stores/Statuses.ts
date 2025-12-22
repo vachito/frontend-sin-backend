@@ -12,12 +12,13 @@ export const useStatusesStore = defineStore('statuses', () => {
         saveStatusLocalStorage()
     },{deep:true})
 
+    const editingId = ref<string|null>(null)
+    const editingName = ref('')
+
     const dataStatus = ref({
         id:'',
         name: ''
     })
-
-    const findState = ref<Istatus>({id:'',name:''})
 
     const statusesStorage = localStorage.getItem('statuses')
     if (statusesStorage) {
@@ -32,12 +33,24 @@ export const useStatusesStore = defineStore('statuses', () => {
         dataStatus.value.id =''
         dataStatus.value.name = ''
     }
-
-    const isEdit=computed(()=> dataStatus.value.id ? true : false)
     
-    function editStatus(id:string) {
-        findState.value = Statuses.value.find(s => s.id === id)
-        Object.assign(dataStatus.value,findState.value)
+    function startEditing(id:string,name:string){
+        editingId.value=id
+        editingName.value=name
+    }
+
+    function cancelEditing(){
+        editingId.value=null
+        editingName.value=''
+    }
+
+    function updateStatus() {
+        const index = Statuses.value.findIndex(s => s.id === editingId.value)
+        if (index !== -1){
+            Statuses.value[index].name=editingName.value
+            saveStatusLocalStorage()
+        }
+        cancelEditing()
     }
 
     function deleteStatus(id:string) {
@@ -51,9 +64,12 @@ export const useStatusesStore = defineStore('statuses', () => {
     return {
         dataStatus,
         Statuses,
-        isEdit,
+        editingId,
+        editingName,
         saveStatus,
-        editStatus,
         deleteStatus,
+        startEditing,
+        updateStatus,
+        cancelEditing
     }
 })

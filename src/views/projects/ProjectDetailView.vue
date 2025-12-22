@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { useProjectStore } from '@/stores/Project'
+import { useStatusesStore } from '@/stores/Statuses';
 import FhaseDetailView from './FhaseDetailView.vue'
 import PhaseDrawer from '@/components/PhaseDrawer.vue'
 
@@ -11,12 +12,13 @@ import { CalendarDays, ChevronsRight, ChevronsUpDown } from 'lucide-vue-next'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Button } from '@/components/ui/button'
 import GeneralEmpty from '@/components/GeneralEmpty.vue'
-
+import GeneralDropDownActions from '@/components/GeneralDropDownActions.vue';
 onMounted(()=>{
   store.dataformPhase.project_id = store.dataProject?.id
 })
 
 const store = useProjectStore()
+const status=useStatusesStore()
 const isOpen = ref(true)
 
 const emp = {
@@ -37,10 +39,11 @@ const description = ref('Llena todos los datos solicitados')
       <CardHeader class="flex flex-col gap-5 w-30">
         <CardTitle>{{ store.dataProject.name }}</CardTitle>
 
-        <CardDescription>
+        <CardDescription class="flex gap-1 align-bottom">
           <Badge class="bg-chart-4">
             {{ store.dataProject.status_id === 1 ? 'Activo' : ' ' }}
           </Badge>
+          <GeneralDropDownActions :object-actions="status.Statuses"/>
         </CardDescription>
       </CardHeader>
 

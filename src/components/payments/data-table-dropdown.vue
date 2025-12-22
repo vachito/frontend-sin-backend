@@ -13,9 +13,15 @@ import {Edit, Trash2} from 'lucide-vue-next'
 import { useStatusesStore } from '@/stores/Statuses'
 
 const store=useStatusesStore()
-defineProps<{
-  id: string
-}>()
+const props = defineProps({ 
+    status_id:String,
+    status_name:String  
+})
+
+const edit = () => {
+  console.log(props.status_id,props.status_name)
+  store.startEditing(props.status_id,props.status_name)
+}
 </script>
 
 <template>
@@ -29,8 +35,8 @@ defineProps<{
     <DropdownMenuContent align="end">
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuItem @click="store.editStatus(id)"><Edit/>Editar</DropdownMenuItem>
-      <DropdownMenuItem @click="store.deleteStatus(id)"><Trash2/>Eiminar</DropdownMenuItem>
+      <DropdownMenuItem @click="edit"><Edit/> Editar</DropdownMenuItem>
+      <DropdownMenuItem @click="store.deleteStatus(status_id)"><Trash2/> Eliminar</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 </template>
