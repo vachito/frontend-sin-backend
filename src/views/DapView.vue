@@ -1,9 +1,9 @@
     <script setup lang="ts">
     import { Label } from '@/components/ui/label'
     import { Switch } from '@/components/ui/switch'
-    import GeneralDropDownActions from '@/components/GeneralDropDownActions.vue';
-    import { useStatusesStore } from '@/stores/Statuses';
-    const store=useStatusesStore()
+    
+    
+    
 </script>
 
 <template>

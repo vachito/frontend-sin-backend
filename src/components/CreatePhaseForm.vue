@@ -67,7 +67,7 @@ const handleSubmit = () => {
     store.savePhase()
     toast.success("Fase creada",{
         description:"La fase fue agregada correctamente al proyecto",
-        duration:2000,
+        duration:3000,
         position:'top-center'
     })
 props.closeDrawer?.()
