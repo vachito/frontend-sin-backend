@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useStatusesStore } from '@/stores/Statuses'
+
 import Button from '@/components/ui/button/Button.vue'
 import Input from '@/components/ui/input/Input.vue'
 import { Label } from '@/components/ui/label'
-
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 const store = useStatusesStore()
@@ -22,16 +22,6 @@ const handleSave = () => {
 const handleCancel = () => {
   closePopovers()
 }
-
-const openForm = () =>{
-  if(store.isEdit){
-    open.value=true
-  }
-}
-
-watch(store.dataStatus, () =>{
-  openForm()
-})
 </script>
 
 <template>
@@ -49,7 +39,7 @@ watch(store.dataStatus, () =>{
                 id="nombre"
                 class="col-span-2 h-8"
                 placeholder="Nombre de estado"
-                v-model="store.dataStatus.name"
+                v-model="store.status_name"
               />
             </div>
 
