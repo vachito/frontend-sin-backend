@@ -14,12 +14,11 @@ import { useStatusesStore } from '@/stores/Statuses'
 
 const store=useStatusesStore()
 const props = defineProps({ 
-    status_id:String,
+    status_id:Number,
     status_name:String  
 })
 
 const edit = () => {
-  console.log(props.status_id,props.status_name)
   store.startEditing(props.status_id,props.status_name)
 }
 </script>

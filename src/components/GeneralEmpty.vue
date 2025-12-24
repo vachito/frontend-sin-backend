@@ -24,7 +24,7 @@ import {
             <EmptyMedia variant="icon">
                 <FolderCode />
             </EmptyMedia>
-            <EmptyTitle>{{ emp.title }}</EmptyTitle>
+            <EmptyTitle class=" text-chart-1">{{ emp.title }}</EmptyTitle>
             <EmptyDescription>
                 {{ emp.description }}
             </EmptyDescription>

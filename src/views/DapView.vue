@@ -2,8 +2,6 @@
     import { Label } from '@/components/ui/label'
     import { Switch } from '@/components/ui/switch'
     
-    
-    
 </script>
 
 <template>
@@ -16,6 +14,4 @@
         <Switch :default-value="true" id="airplane-mode" />
         <Label for="airplane-mode">Airplane Mode</Label>
     </div>
-
-    <GeneralDropDownActions :object-actions="store.Statuses"/>
 </template>
