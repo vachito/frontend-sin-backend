@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useProjectStore } from '@/stores/Project';
 defineProps({
     objectActions: {
         type: Object,
@@ -14,6 +15,8 @@ import {
     DropdownMenuLabel, 
     DropdownMenuSeparator, 
 } from '@/components/ui/dropdown-menu'
+
+const store=useProjectStore()
 </script>
 
 <template>
@@ -27,7 +30,7 @@ import {
         <DropdownMenuContent align="start">
             <DropdownMenuLabel>Cambiar estado</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem v-for="item in objectActions" :key="item.id">{{item.name}}</DropdownMenuItem>
+            <DropdownMenuItem @click="store.changeState(item.id)" v-for="item in objectActions" :key="item.id">{{item.name}}</DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
 </template>
