@@ -107,23 +107,34 @@ export const useProjectStore = defineStore('project', () => {
       }
       return status
     } catch (error) {
-      errors.value=Object.values(error.response.data.errors)
+      errors.value = Object.values(error.response.data.errors)
       setTimeout(() => {
-        errors.value=[]
-      }, 3000);
+        errors.value = []
+      }, 3000)
     }
   }
 
   async function deleteProject(id: number) {
     try {
-      const {status} = await projectsService.deleteProject(id)
-      if(status === 200){
+      const { status } = await projectsService.deleteProject(id)
+      if (status === 200) {
         toast.success('Proyecto eliminado', {
           description: 'El proyecto ha sido eliminado',
           duration: 3000,
           position: 'top-center',
         })
         getProjects()
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function changeState(status_id: number) {
+    try {
+      const {data} = await projectsService.changeProjectState(dataProject.value.id,status_id)
+      if(data){
+        getProjectDetails(dataProject.value.id)
       }
     } catch (error) {
       console.log(error)
@@ -172,17 +183,8 @@ export const useProjectStore = defineStore('project', () => {
       (dataformPhase.tasks = []))
   }
 
-  const hasErrors = computed(()=> errors.value)
-  function changeState(id:string){
-    const status_id= id
-    const index = dataProjects.value.findIndex(p => p.id === dataformPhase.project_id)
-    dataProjects.value[index].status_id=status_id
-  }
-    const projectStorage = localStorage.getItem('projects')
-    if (projectStorage) {
-      dataProjects.value = JSON.parse(projectStorage)
-    }
-  
+  const hasErrors = computed(() => errors.value)
+
   return {
     dataform,
     dataProjects,
@@ -196,6 +198,6 @@ export const useProjectStore = defineStore('project', () => {
     dataformPhase,
     savePhase,
     saveTask,
-    changeState
+    changeState,
   }
 })

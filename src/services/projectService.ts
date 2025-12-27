@@ -15,3 +15,7 @@ export function saveProject(data:object){
 export function deleteProject(id:number){
     return clienteAxios.delete(`/projects/${id}`)
 }
+
+export function changeProjectState(project_id:number, status_id:number){
+    return clienteAxios.post(`/change-project-state/${project_id}`,{status_id})
+}
