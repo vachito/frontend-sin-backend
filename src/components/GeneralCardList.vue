@@ -29,7 +29,7 @@ defineProps({
       <div class="flex items-center gap-3">
         <CardDescription class="font-semibold">
           <Badge class="bg-chart-4">
-            {{ ContentCard.status_id === 1 ? 'Activo' : ' ' }}
+            {{ ContentCard.status.name}}
           </Badge>
         </CardDescription>
       </div>

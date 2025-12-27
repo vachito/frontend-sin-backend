@@ -20,8 +20,8 @@ defineProps({
     required: true,
   },
 })
-
 </script>
+
 <template>
   <Card class="w-full max-w-sm">
     <CardAction class="w-full flex justify-end font-bold text-xl pr-4">
@@ -37,7 +37,7 @@ defineProps({
       <div class="flex items-center gap-3">
         <CardDescription class="font-semibold">
           <Badge class="bg-chart-4">
-            {{ ContentCard.status_id === 1 ? 'Activo' : ' ' }}
+            {{ ContentCard.status.name}}
           </Badge>
         </CardDescription>
       </div>

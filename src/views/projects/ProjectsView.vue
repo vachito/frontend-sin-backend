@@ -12,7 +12,6 @@ import Input from '@/components/ui/input/Input.vue'
 import { LayoutGrid, List, Search } from 'lucide-vue-next'
 
 const store = useProjectStore()
-//store.initProjects()
 const searchProject = ref('')
 
 const CardsGrid = ref(true)
@@ -27,6 +26,9 @@ const btnText = ref('Crear Proyecto')
 const title = ref('Crear Nuevo Proyecto')
 const description = ref('Llena todos los datos solicitados')
 
+onMounted(()=>{
+  store.getProjects()
+})
 const filteredProject = computed(() => {
   if (!searchProject.value) {
     return store.dataProjects

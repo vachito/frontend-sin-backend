@@ -17,6 +17,7 @@ export const useStatusesStore = defineStore('statuses', () => {
   const editingName = ref('')
   //errores
   const errors = ref('')
+  
   async function getStatuses() {
     try {
       const { data } = await statusService.getStatuses()
@@ -25,6 +26,7 @@ export const useStatusesStore = defineStore('statuses', () => {
       console.log(error)
     }
   }
+  getStatuses()
 
   async function saveStatus() {
     try {
