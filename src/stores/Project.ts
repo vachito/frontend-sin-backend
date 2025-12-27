@@ -173,6 +173,16 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   const hasErrors = computed(()=> errors.value)
+  function changeState(id:string){
+    const status_id= id
+    const index = dataProjects.value.findIndex(p => p.id === dataformPhase.project_id)
+    dataProjects.value[index].status_id=status_id
+  }
+    const projectStorage = localStorage.getItem('projects')
+    if (projectStorage) {
+      dataProjects.value = JSON.parse(projectStorage)
+    }
+  
   return {
     dataform,
     dataProjects,
@@ -186,5 +196,6 @@ export const useProjectStore = defineStore('project', () => {
     dataformPhase,
     savePhase,
     saveTask,
+    changeState
   }
 })
