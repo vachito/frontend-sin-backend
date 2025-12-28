@@ -61,6 +61,10 @@ export const useProjectStore = defineStore('project', () => {
     status_id: 9,
     role: 'aprobador',
   })
+
+  const editOpen = ref(false)
+  const editingId = ref(0)
+
   const dataformPhase = reactive<IPhase>({
     id: uid(),
     project_id: '',
@@ -114,6 +118,30 @@ export const useProjectStore = defineStore('project', () => {
     }
   }
 
+  function openEdit(project: any) {
+    editingId.value = project.id
+    Object.assign(dataform, project)
+    editOpen.value = true
+  }
+
+  async function updateProject() {
+    try {
+      const {status} =await projectsService.updateProject(editingId.value,{...dataform})
+      if (status === 200) {
+        toast.success('Proyecto actualizado', {
+          description: 'El proyecto ha sido actualizado correctamente',
+          duration: 3000,
+          position: 'top-center',
+        })
+        editOpen.value = false
+        resetDataForm()
+        getProjects()
+      }
+    } catch (error) {
+      
+    }
+  }
+
   async function deleteProject(id: number) {
     try {
       const { status } = await projectsService.deleteProject(id)
@@ -132,8 +160,8 @@ export const useProjectStore = defineStore('project', () => {
 
   async function changeState(status_id: number) {
     try {
-      const {data} = await projectsService.changeProjectState(dataProject.value.id,status_id)
-      if(data){
+      const { data } = await projectsService.changeProjectState(dataProject.value.id, status_id)
+      if (data) {
         getProjectDetails(dataProject.value.id)
       }
     } catch (error) {
@@ -191,9 +219,13 @@ export const useProjectStore = defineStore('project', () => {
     dataProject,
     errors,
     hasErrors,
+    editOpen,
+    editingId,
     getProjects,
     getProjectDetails,
     saveProject,
+    openEdit,
+    updateProject,
     deleteProject,
     dataformPhase,
     savePhase,

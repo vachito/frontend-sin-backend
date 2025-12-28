@@ -2,6 +2,7 @@
 import { ref} from 'vue'
 import { useProjectStore } from '@/stores/Project'
 import { useStatusesStore } from '@/stores/Statuses';
+import { formatearFecha } from '@/helpers';
 
 import FhaseDetailView from './FhaseDetailView.vue'
 import PhaseDrawer from '@/components/PhaseDrawer.vue'
@@ -63,9 +64,9 @@ const description = ref('Llena todos los datos solicitados')
         <CardDescription class="flex flex-col gap-3">
           <div class="text-center flex items-center gap-2">
             <CalendarDays class=" text-chart-2" />
-            <p>{{ store.dataProject?.start_date_planned }}</p>
+            <p>{{ formatearFecha(store.dataProject?.start_date_planned) }}</p>
             <ChevronsRight class=" text-chart-2"/>
-            <p>{{ store.dataProject?.end_date_planned }}</p>
+            <p>{{ formatearFecha(store.dataProject?.end_date_planned) }}</p>
           </div>
 
           <div>

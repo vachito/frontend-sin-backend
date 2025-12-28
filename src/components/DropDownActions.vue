@@ -1,22 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useProjectStore } from '@/stores/Project'
-defineProps({
-  id: {
-    type: Number,
-    required: true,
-  },
-})
 
-const store = useProjectStore()
-const alertOpen = ref(false)
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,11 +17,20 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-
 import router from '@/router'
-import { Factory } from 'lucide-vue-next'
+import { List, Edit, Trash } from 'lucide-vue-next'
+
+defineProps({
+  project: {
+    type:Object,
+    required: true,
+  },
+})
+
+const store = useProjectStore()
+const alertOpen = ref(false)
+
 </script>
 
 <template>
@@ -43,11 +43,20 @@ import { Factory } from 'lucide-vue-next'
     </DropdownMenuTrigger>
     <DropdownMenuContent align="start">
       <DropdownMenuItem
-        @click="(store.getProjectDetails(id), router.push({ name: 'project-details' }))"
+        @click="(store.getProjectDetails(project.id), router.push({ name: 'project-details' }))"
       >
+      <List/>
         Ver detalle</DropdownMenuItem
       >
-      <DropdownMenuItem @click="alertOpen = true"> Eliminar </DropdownMenuItem>
+      <DropdownMenuItem @click.prevent.stop="store.openEdit(project)">
+        <Edit/> 
+        Editar 
+      </DropdownMenuItem>
+
+      <DropdownMenuItem @click="alertOpen = true">
+        <Trash/> 
+        Eliminar 
+      </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 
@@ -59,7 +68,7 @@ import { Factory } from 'lucide-vue-next'
       </AlertDialogHeader>
       <AlertDialogFooter>
         <AlertDialogCancel>Cancelar</AlertDialogCancel>
-        <AlertDialogAction @click="store.deleteProject(id)">Continuar</AlertDialogAction>
+        <AlertDialogAction @click="store.deleteProject(project.id)">Continuar</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   </AlertDialog>

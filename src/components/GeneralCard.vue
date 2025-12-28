@@ -25,7 +25,7 @@ defineProps({
 <template>
   <Card class="w-full max-w-sm">
     <CardAction class="w-full flex justify-end font-bold text-xl pr-4">
-      <DropDownActions :id="ContentCard.id" />
+      <DropDownActions :project="ContentCard" />
     </CardAction>
 
     <div class="w-full flex justify-center">

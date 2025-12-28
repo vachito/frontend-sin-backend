@@ -91,7 +91,7 @@ const handlesubmit = async () => {
               </Field>
 
               <Field>
-                <FieldLabel for="checkout-7j9-card-name-43j"> Fecha de inicio </FieldLabel>
+                <FieldLabel for="checkout-7j9-card-name-43j">  </FieldLabel>
                 <GeneralDatePicker v-model="startDate" />
               </Field>
 
