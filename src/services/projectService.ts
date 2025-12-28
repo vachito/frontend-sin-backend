@@ -12,6 +12,10 @@ export function saveProject(data:object){
     return clienteAxios.post('/projects',data)
 }
 
+export function updateProject(project_id:number, data){
+    return clienteAxios.patch(`/projects/${project_id}`,data)
+}
+
 export function deleteProject(id:number){
     return clienteAxios.delete(`/projects/${id}`)
 }

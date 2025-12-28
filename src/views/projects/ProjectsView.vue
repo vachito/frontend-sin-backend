@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted } from 'vue'
 import { useProjectStore } from '@/stores/Project'
+import EditProjectFormView from '@/views/projects/EditProjectFormView.vue'
 import GeneralEmpty from '@/components/GeneralEmpty.vue'
 import GeneralDrawer from '@/components/GeneralDrawer.vue'
 import GeneralCard from '@/components/GeneralCard.vue'
@@ -80,20 +81,21 @@ const filteredProject = computed(() => {
         <Search />
       </Label>
     </div>
-
+    <EditProjectFormView/>
     <GeneralEmpty :emp="emp" v-if="filteredProject.length === 0" />
-
+    
     <div v-else>
       <div v-if="CardsGrid"
-        class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7 mt-5 justify-center items-center">
-        <GeneralCard v-for="project in filteredProject" :ContentCard="project"
-          class="hover:border-indigo-300 hover:shadow-xl hover:-translate-y-0.5 transition-all justify-self-center border border-sidebar-border" />
-      </div>
-
-      <div v-if="CardsList" class="grid grid-cols-1 gap-5 mt-5">
-        <GeneralCardList v-for="project in filteredProject" :ContentCard="project"
-          class="hover:border-indigo-300 hover:shadow-xl hover:-translate-y-0.5 transition-all sm:justify-self-left border border-sidebar-border" />
-      </div>
+      class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-7 mt-5 justify-center items-center">
+      <GeneralCard v-for="project in filteredProject" :ContentCard="project"
+      class="hover:border-indigo-300 hover:shadow-xl hover:-translate-y-0.5 transition-all justify-self-center border border-sidebar-border" />
+    </div>
+    
+    <div v-if="CardsList" class="grid grid-cols-1 gap-5 mt-5">
+      <GeneralCardList v-for="project in filteredProject" :ContentCard="project"
+      class="hover:border-indigo-300 hover:shadow-xl hover:-translate-y-0.5 transition-all sm:justify-self-left border border-sidebar-border" />
     </div>
   </div>
+  
+</div>
 </template>
