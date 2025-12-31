@@ -34,6 +34,7 @@ interface IPhase {
 }
 
 interface IProject {
+  id:number|null
   code: string
   name: string
   description: string
@@ -51,6 +52,7 @@ export const useProjectStore = defineStore('project', () => {
   const dataProjects: Ref<Array<IProject>> = ref([])
   const dataProject = ref<IProject | null>(null)
   const dataform = reactive<IProject>({
+    id:null,
     code: `prj-${uid()}`,
     name: '',
     description: '',
@@ -64,6 +66,9 @@ export const useProjectStore = defineStore('project', () => {
 
   const editOpen = ref(false)
   const editingId = ref(0)
+  const stateChanged = ref(false)
+  const addUsersToProjects = ref(false)
+  const assignOpen = ref(false)
 
   const dataformPhase = reactive<IPhase>({
     id: uid(),
@@ -94,6 +99,9 @@ export const useProjectStore = defineStore('project', () => {
       dataProject.value = response.data
     } catch (error) {
       console.log(error)
+    }finally{
+      stateChanged.value = false
+      addUsersToProjects.value=false
     }
   }
 
@@ -159,6 +167,7 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   async function changeState(status_id: number) {
+    stateChanged.value = true
     try {
       const { data } = await projectsService.changeProjectState(dataProject.value.id, status_id)
       if (data) {
@@ -166,6 +175,25 @@ export const useProjectStore = defineStore('project', () => {
       }
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  async function assignProject(data:object){
+    addUsersToProjects.value=true
+    try {
+      data = {...data, project_id: dataProject.value?.id}
+      const {status} = await projectsService.assignProject(data)
+       if (status === 200) {
+        toast.success('Proyecto', {
+          description: 'Se han agregados correctamente a los participantes',
+          duration: 3000,
+          position: 'top-center',
+        })
+        getProjectDetails(dataProject.value.id)
+        assignOpen.value = false
+      }
+    } catch (error) {
+      
     }
   }
 
@@ -215,21 +243,25 @@ export const useProjectStore = defineStore('project', () => {
 
   return {
     dataform,
+    dataformPhase,
     dataProjects,
     dataProject,
     errors,
     hasErrors,
     editOpen,
     editingId,
+    stateChanged,
+    addUsersToProjects,
+    assignOpen,
     getProjects,
     getProjectDetails,
     saveProject,
     openEdit,
     updateProject,
     deleteProject,
-    dataformPhase,
+    changeState,
+    assignProject,
     savePhase,
     saveTask,
-    changeState,
   }
 })

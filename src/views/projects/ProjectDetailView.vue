@@ -1,24 +1,46 @@
 <script lang="ts" setup>
-import { ref} from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { useProjectStore } from '@/stores/Project'
-import { useStatusesStore } from '@/stores/Statuses';
-import { formatearFecha } from '@/helpers';
+import { useStatusesStore } from '@/stores/Statuses'
+import * as userService from '@/services/UserService'
+import { formatearFecha } from '@/helpers'
 
 import FhaseDetailView from './FhaseDetailView.vue'
 import PhaseDrawer from '@/components/PhaseDrawer.vue'
+
+import GeneralEmpty from '@/components/GeneralEmpty.vue'
 import { Progress } from '@/components/ui/progress'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
-import { CalendarDays, ChevronsRight, ChevronsUpDown } from 'lucide-vue-next'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { CalendarDays, ChevronsRight, ChevronsUpDown, PlusCircleIcon } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
-import GeneralEmpty from '@/components/GeneralEmpty.vue'
-import GeneralDropDownActions from '@/components/GeneralDropDownActions.vue';
-import GeneralAvatarTooltip from '@/components/GeneralAvatarTooltip.vue';
+import { Label } from '@/components/ui/label'
+import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from '@/components/ui/select'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import GeneralDropDownActions from '@/components/GeneralDropDownActions.vue'
+import GeneralAvatarTooltip from '@/components/GeneralAvatarTooltip.vue'
+import Spinner from '@/components/ui/spinner/Spinner.vue'
 
 const store = useProjectStore()
-const status=useStatusesStore()
+const status = useStatusesStore()
 const isOpen = ref(true)
+const dataUsers = ref([])//from database
+const users = ref([])
+
+const dataProjectUsers = reactive({
+  role: 'informado',
+  users
+})
+onMounted(async () => {
+  try {
+    const { data } = await userService.getUsers()
+    dataUsers.value = data.data
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 const emp = {
   title: '¡ Aún no tienes fases registradas!',
@@ -40,9 +62,10 @@ const description = ref('Llena todos los datos solicitados')
 
         <CardDescription class="flex gap-1 align-bottom">
           <Badge class="bg-chart-4">
-            {{ store.dataProject?.status.name}}
+            {{ store.dataProject?.status.name }}
+            <Spinner v-if="store.stateChanged" class="text-chart-bachground" />
           </Badge>
-          <GeneralDropDownActions :object-actions="status.Statuses"/>
+          <GeneralDropDownActions :object-actions="status.Statuses" />
         </CardDescription>
       </CardHeader>
 
@@ -63,20 +86,63 @@ const description = ref('Llena todos los datos solicitados')
 
         <CardDescription class="flex flex-col gap-3">
           <div class="text-center flex items-center gap-2">
-            <CalendarDays class=" text-chart-2" />
+            <CalendarDays class="text-chart-2" />
             <p>{{ formatearFecha(store.dataProject?.start_date_planned) }}</p>
-            <ChevronsRight class=" text-chart-2"/>
+            <ChevronsRight class="text-chart-2" />
             <p>{{ formatearFecha(store.dataProject?.end_date_planned) }}</p>
           </div>
 
           <div>
             <p class="font-semibold">Participantes</p>
-            <div class="-space-x-2">
-              <GeneralAvatarTooltip 
-                v-for="user in store.dataProject?.users"  
-                :key="user.id"
-                :avatarTool="user"
-              />
+            <div class="flex justify-around items-center">
+              <div class="-space-x-3">
+                <GeneralAvatarTooltip
+                  v-for="user in store.dataProject?.users"
+                  :key="user.id"
+                  :avatarTool="user"
+                />
+              </div>
+              <Spinner v-if="store.addUsersToProjects" class="text-chart-bachground" />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Popover v-model:open="store.assignOpen">
+                      <PopoverTrigger>
+                        <button type="button">
+                          <PlusCircleIcon class="h-8 w-8 text-sidebar-ring hover:text-chart-3" />
+                        </button>
+                      </PopoverTrigger>
+
+                      <PopoverContent>
+                        <div class="py-4">
+                          <Label class="mb-2 font-semibold">Agregar participante</Label>
+                          <Select multiple v-model="dataProjectUsers.users">
+                            <SelectTrigger>
+                              <SelectValue placeholder="Seleccione un usuario" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem v-for="user in dataUsers" :value="user.id">
+                                {{ user.email }}
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div>
+                          <Button 
+                            type="submit" 
+                            variant="outline"
+                            @click="store.assignProject(dataProjectUsers),users=[]"
+                          >Agregar</Button>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Agregar participante</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </CardDescription>

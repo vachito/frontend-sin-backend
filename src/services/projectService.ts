@@ -23,3 +23,7 @@ export function deleteProject(id:number){
 export function changeProjectState(project_id:number, status_id:number){
     return clienteAxios.post(`/change-project-state/${project_id}`,{status_id})
 }
+
+export function assignProject(data:Object){
+    return clienteAxios.post('/assign-projects',data)
+}

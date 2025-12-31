@@ -11,9 +11,9 @@ defineProps({
 </script>
 
 <template>
-  <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>
+  <TooltipProvider >
+        <Tooltip >
+          <TooltipTrigger class="*:data-[slot=avatar]:ring-sidebar-border *:data-[slot=avatar]:ring-2">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>{{ avatarTool.id }}</AvatarFallback>
