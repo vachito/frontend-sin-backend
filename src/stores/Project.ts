@@ -69,6 +69,7 @@ export const useProjectStore = defineStore('project', () => {
   const stateChanged = ref(false)
   const addUsersToProjects = ref(false)
   const assignOpen = ref(false)
+  const unAssignOpen = ref(false)
 
   const dataformPhase = reactive<IPhase>({
     id: uid(),
@@ -197,6 +198,25 @@ export const useProjectStore = defineStore('project', () => {
     }
   }
 
+  async function unassignProject(data:object){
+    addUsersToProjects.value=true
+    try {
+      data = {...data, project_id: dataProject.value?.id}
+      const {status} = await projectsService.unassignProject(data)
+       if (status === 200) {
+        toast.success('Proyecto', {
+          description: 'Se han removido a los participantes del proyecto',
+          duration: 3000,
+          position: 'top-center',
+        })
+        getProjectDetails(dataProject.value.id)
+        unAssignOpen.value = false
+      }
+    } catch (error) {
+      
+    }
+  }
+
   function savePhase() {
     const i = dataProjects.value.findIndex((p) => p.id === dataformPhase.project_id)
     dataProjects.value[i]?.phases.push({ ...dataformPhase, tasks: [...dataformPhase.tasks] })
@@ -253,6 +273,7 @@ export const useProjectStore = defineStore('project', () => {
     stateChanged,
     addUsersToProjects,
     assignOpen,
+    unAssignOpen,
     getProjects,
     getProjectDetails,
     saveProject,
@@ -261,6 +282,7 @@ export const useProjectStore = defineStore('project', () => {
     deleteProject,
     changeState,
     assignProject,
+    unassignProject,
     savePhase,
     saveTask,
   }
