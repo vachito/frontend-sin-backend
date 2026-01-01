@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
-import { CalendarDays, ChevronsRight, ChevronsUpDown, PlusCircleIcon } from 'lucide-vue-next'
+import { CalendarDays, ChevronsRight, ChevronsUpDown, PlusCircleIcon,CircleX } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue} from '@/components/ui/select'
@@ -103,46 +103,90 @@ const description = ref('Llena todos los datos solicitados')
                 />
               </div>
               <Spinner v-if="store.addUsersToProjects" class="text-chart-bachground" />
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Popover v-model:open="store.assignOpen">
-                      <PopoverTrigger>
-                        <button type="button">
-                          <PlusCircleIcon class="h-8 w-8 text-sidebar-ring hover:text-chart-3" />
-                        </button>
-                      </PopoverTrigger>
 
-                      <PopoverContent>
-                        <div class="py-4">
-                          <Label class="mb-2 font-semibold">Agregar participante</Label>
-                          <Select multiple v-model="dataProjectUsers.users">
-                            <SelectTrigger>
-                              <SelectValue placeholder="Seleccione un usuario" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem v-for="user in dataUsers" :value="user.id">
-                                {{ user.email }}
-                              </SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
+              <div class="-space-x-3">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Popover v-model:open="store.assignOpen">
+                        <PopoverTrigger>
+                          <button type="button">
+                            <PlusCircleIcon class="h-8 w-8 text-sidebar-ring hover:text-chart-3 bg-background rounded-full z-10" />
+                          </button>
+                        </PopoverTrigger>
+  
+                        <PopoverContent>
+                          <div class="py-4">
+                            <Label class="mb-2 font-semibold">Agregar participante</Label>
+                            <Select multiple v-model="dataProjectUsers.users">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Seleccione un usuario" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem v-for="user in dataUsers" :value="user.id">
+                                  {{ user.email }}
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+  
+                          <div>
+                            <Button 
+                              type="submit" 
+                              variant="outline"
+                              @click="store.assignProject(dataProjectUsers),users=[]"
+                            >Agregar</Button>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Agregar participante</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
 
-                        <div>
-                          <Button 
-                            type="submit" 
-                            variant="outline"
-                            @click="store.assignProject(dataProjectUsers),users=[]"
-                          >Agregar</Button>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Agregar participante</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Popover v-model:open="store.unAssignOpen">
+                        <PopoverTrigger>
+                          <button type="button">
+                            <CircleX class="h-8 w-8 text-sidebar-ring hover:text-chart-3 bg-background rounded-full z-0" />
+                          </button>
+                        </PopoverTrigger>
+  
+                        <PopoverContent>
+                          <div class="py-4">
+                            <Label class="mb-2 font-semibold">Remover participante</Label>
+                            <Select multiple v-model="dataProjectUsers.users">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Seleccione un usuario" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem v-for="user in store.dataProject?.users" :value="user.id">
+                                  {{ user.email }}
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+  
+                          <div>
+                            <Button 
+                              type="submit" 
+                              variant="outline"
+                              @click="store.unassignProject(dataProjectUsers),users=[]"
+                            >Abandonar proyecto</Button>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Remover participante</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
             </div>
           </div>
         </CardDescription>

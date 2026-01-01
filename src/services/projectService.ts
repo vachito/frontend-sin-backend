@@ -27,3 +27,7 @@ export function changeProjectState(project_id:number, status_id:number){
 export function assignProject(data:Object){
     return clienteAxios.post('/assign-projects',data)
 }
+
+export function unassignProject(data:Object){
+    return clienteAxios.post('/unassign-projects',data)
+}
